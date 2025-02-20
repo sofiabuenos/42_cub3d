@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 15:44:50 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/20 15:47:42 by sofiabueno       ###   ########.fr       */
+/*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
+/*   Updated: 2025/02/20 15:11:38 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+void	print_err(char *str)
 {
-	if (parse(ac, av))
-		exit(EXIT_FAILURE);
-	
-	return (0);
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
 }

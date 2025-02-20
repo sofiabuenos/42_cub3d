@@ -39,7 +39,7 @@ else
 	LFLAGS += -L $(MLXD) -lmlx -Ilmlx -lXext -lX11 -lm
 endif
 
-SRCS = $(SRCD)main.c
+SRCS = $(SRCD)main.c $(SRCD)error.c $(SRCD)parsing.c
 
 OBJS = $(patsubst $(SRCD)%.c, $(OBJD)%.o, $(SRCS))
 
