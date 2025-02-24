@@ -12,30 +12,78 @@
 
 #include "cub3d.h"
 
-int	parameters(int ac)
+int	check_id(char *str, t_cub3d *cub, int count)
 {
-	if (ac != 2)
-		return (1);
+	char			*temp;
+	unsigned int	i;
+	unsigned int	j;
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	j = i;
+	while (!ft_isspace(str[j]))
+		j++;
+	temp = ft_substr(str, i, j - i);
+	if (!is_valid_id(temp))
+	{
+		power_print_err("Invalid ID: ", temp);
+		free(temp);
+		quit(cub);
+	}
+	cub->elements[count].id = ft_strdup(temp);
+	free(temp);
 	return (0);
 }
 
-int	extension(char **av)
+int	check_element(char *str, t_cub3d *cub, int count)
 {
-	int		i;
-	if (av[1])
+
+	if (ft_strlen(str) == 1 && str[0] == '\n')
+		return (0);
+	if (word_count(str) != 2)
 	{
-		i = ft_strlen(av[1]);
-		if (i - 5 < 0 || av[1][i - 5] == '/' || !(ft_strnstr((av[1] + (i - 4)), ".cub", 4)))
-			return (1);
+		power_print_err("Invalid line. Format: ID ./path_to_texture or ID color. Fix: ", str);
+		quit(cub);
+	}
+	if (check_id(str, cub, count))
+		return (1);
+	//check_info()
+	printf("%s\n", str);
+	return (1);
+}
+
+int	parse_elements(char *file, t_cub3d *cub)
+{
+	char	*line;
+	int		count;
+	int		fd;
+
+	count = 0;
+	if ((fd = open(file, O_RDONLY)) == -1)
+		return(print_err("Unable to open file"), 1);
+	line = get_next_line(fd);
+	while (line)
+	{
+		count += check_element(line, cub, count);
+		if (count == 6)
+			break; // rever esse break. quando tenho algum repetido
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (line)
+		free(line);
+	if (!unique_ids(cub)) // melhorar essa verificação. verificar ainda na etapa linha a linha.
+	{
+		print_err("Missing or repeted elements");
+		quit(cub);
 	}
 	return (0);
 }
 
-int	parse(int ac, char **av)
+int	parse(t_cub3d *cub)
 {
-	if (parameters(ac))
-		return (print_err("Check parameters. Should use ./cub3D path_to_map.cub"), 1);
-	if (extension(av))
-		return (print_err("Check extension. The file should have a name and a .cub extension"), 1);
+	parse_elements(cub->file_name, cub);
+	print_elements(cub);
+	//parse_map()
 	return (0);
 }

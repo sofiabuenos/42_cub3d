@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 12:55:38 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/04/29 21:24:49 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/02/24 11:57:33 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+/*extra*/
+int		ft_isspace(int c);
 
 /*bonus prototypes*/
 t_list	*ft_lstnew(void *content);
