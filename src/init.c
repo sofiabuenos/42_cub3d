@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:29:48 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/24 15:38:07 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/02/26 11:03:19 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,16 @@ int	init(char **av, t_cub3d *cub)
 
 void	print_elements(t_cub3d *cub)
 {
-    int i;
-
-    for (i = 0; i < 6; i++)
-    {
-        if (cub->elements[i].id)
-            printf("Element %d ID: %s\n", i, cub->elements[i].id);
-        else
-            printf("Element %d ID: (null)\n", i);
-
-        if (cub->elements[i].info)
-            printf("Element %d Info: %s\n", i, cub->elements[i].info);
-        else
-            printf("Element %d Info: (null)\n", i);
-    }
+	int i;
+	for (i = 0; i < 6; i++)
+	{
+		if (cub->elements[i].id)
+			printf("Element %d ID: %s\n", i, cub->elements[i].id);
+		else
+			printf("Element %d ID: (null)\n", i);	
+		if (cub->elements[i].info)
+			printf("Element %d Info: %s\n", i, cub->elements[i].info);
+		else
+			printf("Element %d Info: (null)\n", i);
+	}
 }

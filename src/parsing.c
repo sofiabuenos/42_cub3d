@@ -12,29 +12,6 @@
 
 #include "cub3d.h"
 
-int	check_id(char *str, t_cub3d *cub, int count)
-{
-	char			*temp;
-	unsigned int	i;
-	unsigned int	j;
-	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
-	j = i;
-	while (!ft_isspace(str[j]))
-		j++;
-	temp = ft_substr(str, i, j - i);
-	if (!is_valid_id(temp))
-	{
-		power_print_err("Invalid ID: ", temp);
-		free(temp);
-		quit(cub);
-	}
-	cub->elements[count].id = ft_strdup(temp);
-	free(temp);
-	return (0);
-}
-
 int	check_element(char *str, t_cub3d *cub, int count)
 {
 
@@ -45,9 +22,8 @@ int	check_element(char *str, t_cub3d *cub, int count)
 		power_print_err("Invalid line. Format: ID ./path_to_texture or ID color. Fix: ", str);
 		quit(cub);
 	}
-	if (check_id(str, cub, count))
-		return (1);
-	//check_info()
+	check_id(str, cub, count);
+	check_info(str, cub, count);
 	printf("%s\n", str);
 	return (1);
 }

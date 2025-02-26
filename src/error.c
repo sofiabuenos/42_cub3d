@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/24 14:00:12 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/02/26 12:28:17 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void	power_print_err(char *s1, char *s2)
 	ft_putstr_fd(s1, 2);
 	ft_putstr_fd(s2, 2);
 	//ft_putstr_fd("\n", 2);
+}
+
+void	free_array(char **str)
+{
+	int i;
+
+	if (!str)
+		return;
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
 void	free_elements(t_cub3d *cub)

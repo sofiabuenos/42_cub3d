@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/24 16:21:12 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/02/26 16:04:48 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	word_count(char *str)
 	words = 0;
 	while (*str)
 	{
-		if (!isspace(*str))
+		if (!ft_isspace(*str))
 		{
 			words++;
 			str++;
-			while (!isspace(*str))
+			while (!ft_isspace(*str))
 				str++;
 		}
 		str++;
@@ -31,13 +31,44 @@ int	word_count(char *str)
 	return (words);
 }
 
-int	is_valid_id(char *temp)
+unsigned int	index_to_word(char *str, int nb)
 {
-	if (ft_strncmp(temp, NO, 3) == 0 || ft_strncmp(temp, SO, 3) == 0 ||
-		ft_strncmp(temp, WE, 3) == 0 || ft_strncmp(temp, EA, 3) == 0 ||
-		ft_strncmp(temp, F, 2) == 0 || ft_strncmp(temp, C, 2) == 0)
-		return (1);
-	return (0);
+	int	word;
+	unsigned int	i;
+
+	word = 0;
+	i = 0;
+	while (word < nb && str[i])
+	{
+		if (!ft_isspace(str[i]))
+		{
+			word++;
+			if (word == nb)
+				break;
+			while (!ft_isspace(str[i]) && str[i])
+				i++;
+		}
+		i++;
+	}
+	return (i);
+}
+
+int	there_are_commas(char *str)
+{
+	int	comma;
+	int	i;
+
+	comma = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ',')
+			comma++;
+		i++;
+	}
+	if (comma != 2)
+		return(power_print_err("Fix RGB format. Must have 3 numbers separated by commas. eg.: 0, 255, 255.: ", str), 0);
+	return (1);
 }
 
 int	unique_ids(t_cub3d *cub)

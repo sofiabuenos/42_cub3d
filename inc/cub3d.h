@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/24 16:21:12 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/02/26 16:22:23 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,27 @@ typedef struct s_cub3d
 	t_elements	*elements;
 }				t_cub3d;
 
-/*===== parse =====*/
-int		parse(t_cub3d *cub);
-/*===== parse utils =====*/
-int		word_count(char *str);
-int		is_valid_id(char *temp);
-int		unique_ids(t_cub3d *cub);
-/*===== Error =====*/
-void	print_err(char *str);
-void	power_print_err(char *s1, char *s2);
-void	ft_destroy(t_cub3d *cub);
-void	quit(t_cub3d *cub);
-/*===== init =====*/
-int		init(char **av, t_cub3d *cub);
-void	print_elements(t_cub3d *cub);
+/*======= parse =======*/
+int				parse(t_cub3d *cub);
+/*======= parse_elements =======*/
+int				check_id(char *str, t_cub3d *cub, int count);
+int				is_valid_id(char *temp);
+int				check_info(char *str, t_cub3d *cub, int count);
+int				check_RGB(char *str, t_cub3d *cub, int count);
+int				check_path(char *str, t_cub3d *cub, int count);
+/*======= parse utils =======*/
+int				word_count(char *str);
+int				there_are_commas(char *str);
+unsigned int	index_to_word(char *str, int nb);
+int				unique_ids(t_cub3d *cub);
+/*======= Error =======*/
+void			print_err(char *str);
+void			power_print_err(char *s1, char *s2);
+void			ft_destroy(t_cub3d *cub);
+void			quit(t_cub3d *cub);
+void			free_array(char **str);
+/*======= init =======*/
+int				init(char **av, t_cub3d *cub);
+void			print_elements(t_cub3d *cub);
 
 #endif
