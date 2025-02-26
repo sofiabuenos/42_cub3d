@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 15:59:35 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/23 22:01:20 by sheila           ###   ########.fr       */
+/*   Updated: 2025/02/26 18:28:44 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
-# define MOVE_SPEED 0.5
-# define ROTATE 0.02
 # define SIZE 64
 # define PI 3.14159265359
+# define ROTATE 0.02
+# define MOVE_SPEED 0.05
+//# define BOUNDARY 0.1
 
 # define ESC	65307
 # define LEFT	65361
@@ -36,6 +37,28 @@
 # define A		97
 # define S		115
 # define D		100
+
+# define NO		0
+# define SO		1
+# define EA		2
+# define WE		3
+
+
+/*
+typedef struct s_map
+{
+	char	**map; //grid do mapa [y][x]
+	
+	
+	}	t_map;
+	*/
+
+typedef struct s_coord
+{
+	double	x;
+	double	y;
+}	t_coord;
+
 
 typedef struct	s_texture
 {
@@ -46,69 +69,62 @@ typedef struct	s_texture
 	int		endian;
 }	t_texture;
 
-typedef struct s_map
-{
-	
-	
-
-}	t_map;
-
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-}	t_coord;
-
 typedef struct s_key
 {
-	int	up;
-	int	down;
+	int	foward;
+	int	backward;
 	int	left;
 	int	right;
 	int rot_left;
 	int	rot_right;
 }	t_key;
 
-
 typedef struct s_player
 {
-	t_coord		*pos;
+	t_coord		pos;
 	t_coord		dir;
 	double		angle;
 	char		pov;
-	
-
 }	t_player;
 
 typedef struct s_ray
 {
-	double		dir_x;
-	double		dir_y;
-	int			map_x;
+	t_coord		dir; // Direção do raio no espaço 2D
+	t_coord		delta; // Comprimento do raio de uma borda da célula até a próxima
+	t_coord		side; // Distância inicial até a primeira borda do grid
+	t_coord		hit; // Distancia do player da parede
+	int			map_x; // Posição do jogador convertida para células do mapa
 	int			map_y;
-	double		delta_x;
-	double		delta_y;
-	double		side_x;
-	double		side_y;
-	int			step_x;
+	int			step_x; // Passo e direção inicial do raio
 	int			step_y;
 	double		wall_x;
-	int			side;
+	int			side_axis;
 	
 }	t_ray;
+
+typedef struct s_render
+{
+	int			nbr_text;
+	t_texture	*image;
+	
+
+}	t_render;
 
 typedef struct s_game
 {
 	t_player	*player;
-	t_texture	img[4];
+	t_texture	wall[4];
 	char		texture[4];
-	int			screen_h;
-	int			screen_w;
+	//int			screen_h;
+	//int			screen_w;
 	void		*mlx;
 	void		*win;
+	//t_texture	*image;
 	t_key		key;
 	t_texture	*bground;
 	t_ray		*ray;
+	t_render	*render;
+	double		fov;
 	//t_map		*map;
 }	t_game;
 

@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:16:39 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/20 17:50:21 by sheila           ###   ########.fr       */
+/*   Updated: 2025/02/26 17:07:26 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	free_textures(t_game *cub)
 	i = -1;
 	while (++i < 4)
 	{
-		if (cub->img[i].img)
-			mlx_destroy_image(cub->mlx, cub->img[i].img);
+		if (cub->wall[i].img)
+			mlx_destroy_image(cub->mlx, cub->wall[i].img);
 	}
 	if (cub->win)
 		mlx_destroy_window(cub->mlx, cub->win);
@@ -31,8 +31,8 @@ void	quit_game(t_game *cub)
 {
 	if (!cub)
 	return ;
-	if (cub->img)
-	free_textures(cub->img);
+	if (cub->wall)
+	free_textures(cub->wall);
 	if (cub->win)
 		mlx_destroy_window(cub->mlx, cub->win);
 	if (cub->mlx)

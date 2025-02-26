@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:26 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/23 17:34:56 by sheila           ###   ########.fr       */
+/*   Updated: 2025/02/26 18:38:21 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,9 @@ void	background(t_game *cub)
 			my_mlx_pixel_put(cub->bground, x, y, color);
 		}
 	}
+}
+
+void	draw(t_game *cub)
+{
+	
 }

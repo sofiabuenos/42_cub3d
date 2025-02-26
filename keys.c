@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:35:13 by sheila            #+#    #+#             */
-/*   Updated: 2025/02/20 17:01:10 by sheila           ###   ########.fr       */
+/*   Updated: 2025/02/25 15:41:00 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	keypress(int keycode, t_game *cub)
 {
 	if (keycode == W)
-		cub->key.up = 1;
+		cub->key.foward = 1;
 	else if (keycode == S)
-		cub->key.down = 1;
+		cub->key.backward = 1;
 	else if (keycode == A)
 		cub->key.left = 1;
 	else if (keycode == D)
@@ -34,9 +34,9 @@ int	keyrelease(int keycode, t_game *cub)
 	if (keycode == ESC)
 		quit_game(cub);	
 	if (keycode == W)
-		cub->key.up = 0;
+		cub->key.foward = 0;
 	else if (keycode == S)
-		cub->key.down = 0;
+		cub->key.backward = 0;
 	else if (keycode == A)
 		cub->key.left = 0;
 	else if (keycode == D)
