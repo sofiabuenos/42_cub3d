@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:55 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/26 18:40:16 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/06 15:51:06 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	move_forward(t_game *cub)
 
 	new_x = cub->player->pos.x + cub->player->dir.x * MOVE_SPEED;
 	new_y = cub->player->pos.y + cub->player->dir.y * MOVE_SPEED;
-	if (cub->map.map[(int)cub->player->pos.y][(int)new_x] != '1') //
+	if (cub->map[(int)cub->player->pos.y][(int)new_x] != '1') //
 		cub->player->pos.x = new_x;
-	if (cub->map.map[(int)new_y][(int)cub->player->pos.x] != '1')
+	if (cub->map[(int)new_y][(int)cub->player->pos.x] != '1')
 		cub->player->pos.y = new_y;
 }
 
@@ -32,9 +32,9 @@ void	move_backward(t_game *cub)
 
 	new_x = cub->player->pos.x - cub->player->dir.x * MOVE_SPEED;
 	new_y = cub->player->pos.y - cub->player->dir.y * MOVE_SPEED;
-	if (cub->map.map[(int)cub->player->pos.y][(int)new_x] != '1')
+	if (cub->map[(int)cub->player->pos.y][(int)new_x] != '1')
 		cub->player->pos.x = new_x;
-	if (cub->map.map[(int)new_y][(int)cub->player->pos.x] != '1')
+	if (cub->map[(int)new_y][(int)cub->player->pos.x] != '1')
 		cub->player->pos.y = new_y;
 }
 
@@ -45,9 +45,9 @@ void	move_left(t_game *cub)
 
 	new_x = cub->player->pos.x + sin(cub->player->angle)* MOVE_SPEED;
 	new_y = cub->player->pos.y - cos(cub->player->angle) * MOVE_SPEED;
-	if (cub->map.map[(int)cub->player->pos.y][(int)new_x] != '1') //se for necessario é possivel + e - um pequeno valor para ter um limite de segurança que impeça o jogador de ficar muito proximo as paredes (BOUNDARY) 
+	if (cub->map[(int)cub->player->pos.y][(int)new_x] != '1') //se for necessario é possivel + e - um pequeno valor para ter um limite de segurança que impeça o jogador de ficar muito proximo as paredes (BOUNDARY) 
 		cub->player->pos.x = new_x;
-	if (cub->map.map[(int)new_y][(int)cub->player->pos.x] != '1')
+	if (cub->map[(int)new_y][(int)cub->player->pos.x] != '1')
 		cub->player->pos.y = new_y;
 }
 
@@ -58,9 +58,9 @@ void	move_right(t_game *cub)
 
 	new_x = cub->player->pos.x - sin(cub->player->angle)* MOVE_SPEED;
 	new_y = cub->player->pos.y + cos(cub->player->angle) * MOVE_SPEED;
-	if (cub->map.map[(int)cub->player->pos.y][(int)new_x] != '1')
+	if (cub->map[(int)cub->player->pos.y][(int)new_x] != '1')
 		cub->player->pos.x = new_x;
-	if (cub->map.map[(int)new_y][(int)cub->player->pos.x] != '1')
+	if (cub->map[(int)new_y][(int)cub->player->pos.x] != '1')
 		cub->player->pos.y = new_y;
 }
 

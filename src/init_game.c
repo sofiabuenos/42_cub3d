@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 16:19:36 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/26 18:28:07 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/09 16:54:10 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,56 +17,61 @@ void	init_mlx(t_game *cub)
 	cub->mlx = mlx_init();
 	if(!cub->mlx)
 		error_msg(cub, "Fail to initialize MLX");
-	init_textures(cub);
 	//cub->screen_h = (int)HEIGHT;
 	//cub->screen_w = (int)WIDTH;
 	cub->win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3d");
 	if(!cub->win)
 		error_msg(cub, "Fail to initialize MLX");
+	init_textures(cub);
 	init_background(cub);
+	init_player(cub);
+}
+
+void	get_texture_and_color(t_game *cub)
+{
+	int		i;
+
+	i = -1;
+	cub->path = (char **)malloc(sizeof(char *) * 4);
+	while (++i < 6)
+	{
+		if (!ft_strcmp(cub->elements[i].id, "NO"))
+			cub->path[0] = cub->elements[i].info;
+		else if (!ft_strcmp(cub->elements[i].id, "SO"))
+			cub->path[1] = cub->elements[i].info;
+		else if (!ft_strcmp(cub->elements[i].id, "EA"))
+			cub->path[2] = cub->elements[i].info;
+		else if (!ft_strcmp(cub->elements[i].id, "WE"))
+			cub->path[3] = cub->elements[i].info;
+		else if (!ft_strcmp(cub->elements[i].id, "C"))
+			cub->ceiling = convert_to_rgb(cub->elements[i].info, cub);
+		else if (!ft_strcmp(cub->elements[i].id, "F"))
+			cub->floor = convert_to_rgb(cub->elements[i].info, cub);
+	}
+	if (!cub->path[0] || !cub->path[1] || !cub->path[2] || !cub->path[3]
+		|| !cub->ceiling || !cub->floor)
+		error_msg(cub, "Fail to get any of elements");
 }
 
 void	init_textures(t_game *cub)
 {
 	int	i;
 	int	t_size;
-
-	i = -1;
-	//t_size = (int)SIZE;
-
-	//E preciso definfir cada textura com base no seu endereço definido no mapa;
-	//cub->texture[NO] = north;
-	//cub->texture[SO] = south;
-	//cub->texture[EA] = east;
-	//cub->texture[WE] = west;
 	
-	while(++i < 4)
+	i = -1;
+	t_size = (int)SIZE;
+	get_texture_and_color(cub);
+	while (++i < 4)
 	{
-		cub->wall[i].img = mlx_xpm_file_to_image(cub->mlx, cub->texture[i], SIZE, SIZE);
-		if(!cub->wall[i].img)
+		if (!cub->path[i])
+    		error_msg(cub, "Texture path is NULL");
+		cub->wall[i].img = mlx_xpm_file_to_image(cub->mlx, cub->path[i], &t_size, &t_size);
+		if (!cub->wall[i].img)
 			error_msg(cub, "Fail to load wall texture");
 		cub->wall[i].addr = mlx_get_data_addr(cub->wall[i].img, &cub->wall[i].bpp, &cub->wall[i].size_line, &cub->wall[i].endian);
-		if(!cub->wall[i].addr)
+		if (!cub->wall[i].addr)
 			error_msg(cub, "Fail to get wall texture adress");
 	}
-}
-
-void	init_player(t_game	*cub)
-{
-	//cub->player->pos.x = + 0.5;
-	//cub->player->pos.y = + 0.5;
-
-	if(cub->player->pov == 'N')
-		cub->player->angle = 3 * PI / 2;
-	else if(cub->player->pov == 'S')
-		cub->player->angle = PI / 2;
-	else if(cub->player->pov == 'E')
-		cub->player->angle = 0;
-	else if(cub->player->pov == 'W')
-		cub->player->angle = PI;
-	cub->player->dir.x = cos(cub->player->angle) * MOVE_SPEED;
-	cub->player->dir.y = sen(cub->player->angle) * MOVE_SPEED;
-	cub->fov = 60 * (PI / 180); //plano da camera em radianos
 }
 
 void	init_background(t_game *cub)
@@ -79,6 +84,25 @@ void	init_background(t_game *cub)
 	if (!cub->bground->addr)
 		error_msg(cub, "Fail to get background adress");
 }
+
+void	init_player(t_game	*cub)
+{
+	cub->player->pos.x += 0.5;
+	cub->player->pos.y += 0.5;
+
+	if (cub->player->pov == 'N')
+		cub->player->angle = 3 * PI / 2;
+	else if (cub->player->pov == 'S')
+		cub->player->angle = PI / 2;
+	else if (cub->player->pov == 'E')
+		cub->player->angle = 0;
+	else if (cub->player->pov == 'W')
+		cub->player->angle = PI;
+	cub->player->dir.x = cos(cub->player->angle) * MOVE_SPEED;
+	cub->player->dir.y = sin(cub->player->angle) * MOVE_SPEED;
+	cub->fov = 60 * (PI / 180); //plano da camera em radianos;
+}
+
 
 
 /*__DEVICE__ float ceil(float __x)

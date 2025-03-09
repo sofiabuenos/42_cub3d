@@ -6,7 +6,7 @@
 /*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:16:23 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/02/26 18:34:55 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/08 16:53:21 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,13 @@ void	dda(t_game *cub) //Algoritmo Digital Differential Analyzer (DDA)
 			cub->ray->map_y += cub->ray->step_y;
 			cub->ray->side_axis = 1; // Colisão eixo y (vertical)
 		}
-		//if (cub->map->map[cub->ray->map_y][cub->ray->map_x] == '1') // Se atingiu uma parede ('1' no mapa), parar o loop
-		//	hit = 1;
+		if (cub->map[cub->ray->map_y][cub->ray->map_x] == '1') // Se atingiu uma parede ('1' no mapa), parar o loop
+			hit = 1;
 	}
 }
 
 void	ray_info(t_game *cub, double ray_angle)
 {
-	double  hit_dist;
-	
 	cub->ray->dir.x = cos(ray_angle);
 	cub->ray->dir.y = sin(ray_angle);
 	cub->ray->map_x = (int)cub->player->pos.x;
@@ -82,25 +80,28 @@ void	ray_info(t_game *cub, double ray_angle)
 	get_delta_distance_y(cub, cub->ray->dir.y);
 	dda(cub);
 	if (cub->ray->side_axis == 0)
-		hit_dist = cub->ray->side.x - cub->ray->delta.x;
+		cub->ray->hit_dist = cub->ray->side.x - cub->ray->delta.x;
 	else
-		hit_dist = cub->ray->side.y - cub->ray->delta.y;
-	cub->ray->hit.x = cub->player->pos.x + hit_dist * cub->ray->dir.x;
-	cub->ray->hit.y = cub->player->pos.y + hit_dist * cub->ray->dir.y;
-	
+		cub->ray->hit_dist = cub->ray->side.y - cub->ray->delta.y;
+	cub->ray->hit.x = cub->player->pos.x + cub->ray->hit_dist * cub->ray->dir.x;
+	cub->ray->hit.y = cub->player->pos.y + cub->ray->hit_dist * cub->ray->dir.y;
+	get_texture_index(cub);
+}
+
+void	get_texture_index(t_game *cub)
+{
 	if (cub->ray->side_axis == 0) // Colisão x
 	{
 		if (cub->ray->step_x > 0)
-		cub->render->nbr_text = (int)EA; // Parede Leste 
+			cub->ray->texture = cub->wall[2]; // Parede Leste 
 		else
-		cub->render->nbr_text = (int)WE; // Parede Oeste
+			cub->ray->texture = cub->wall[3]; // Parede Oeste
 	}
 	else // Colisão y
 	{
 		if (cub->ray->step_y > 0)
-			cub->render->nbr_text = (int)SO; // Parede Sul
+			cub->ray->texture = cub->wall[1]; // Parede Sul
 		else
-			cub->render->nbr_text = (int)NO; // Parede Norte
+			cub->ray->texture = cub->wall[0]; // Parede Norte
 	}
 }
-
