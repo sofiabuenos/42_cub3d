@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:26 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/06 15:51:42 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/09 19:19:12 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,12 @@ void	render(t_game *cub)
 	int	x;
 	
 	x = 0;
-	cub->render->text_step = cub->player->pov / WIDTH;
+	cub->render->text_step = cub->fov / WIDTH;
 	while(x < WIDTH)
 	{
-		cub->render->texture_pos = cub->player->angle - cub->player->pov + (x * cub->render->text_step);
+		cub->render->texture_pos = cub->player->angle - (cub->fov / 2) + (x * cub->render->text_step);
 		ray_info(cub, cub->render->texture_pos);
+		define_draw_points(cub);
 		draw_walls(cub, x, cub->render->draw_start, cub->render->draw_end);
 		x++;
 	}

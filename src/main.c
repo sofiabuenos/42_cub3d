@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:50 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/08 16:52:32 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/09 20:02:06 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	load_game(t_game cub)
 {
 	init_mlx(&cub);
 	mlx_hook(cub.win, 2, 1L << 0, keypress, &cub);
-	mlx_hook(cub.win, 2, 1L << 0, keyrelease, &cub);
+	mlx_hook(cub.win, 3, 1L << 1, keyrelease, &cub);
 	mlx_hook(cub.win, 17, 0, quit_game, &cub);
 	mlx_loop_hook(cub.mlx, gameloop , &cub);
 	mlx_loop(cub.mlx);
