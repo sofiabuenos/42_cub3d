@@ -6,13 +6,13 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 16:19:36 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/09 19:05:22 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:34:03 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_mlx(t_game *cub)
+void	init_game(t_game *cub)
 {
 	cub->mlx = mlx_init();
 	if(!cub->mlx)
@@ -98,8 +98,10 @@ void	init_player(t_game	*cub)
 		cub->player->angle = 0;
 	else if (cub->player->pov == 'W')
 		cub->player->angle = PI;
-	cub->player->dir.x = cos(cub->player->angle) * MOVE_SPEED;
-	cub->player->dir.y = sin(cub->player->angle) * MOVE_SPEED;
+	//cub->player->dir.x = cos(cub->player->angle) * MOVE_SPEED;
+	//cub->player->dir.y = sin(cub->player->angle) * MOVE_SPEED;
+	cub->player->dir.x = cos(cub->player->angle);
+	cub->player->dir.y = sin(cub->player->angle);
 	cub->fov = 60 * (PI / 180); //plano da camera em radianos;
 }
 

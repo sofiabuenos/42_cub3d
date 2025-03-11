@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:26 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/09 19:19:12 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:58:32 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ void	draw_walls(t_game *cub, int x, int begin, int end)
 {
 	int	y;
 	
-	if (cub->ray->side_axis == 0)
-		cub->render->wall_x = cub->ray->hit.x - floor(cub->ray->hit.x);
+	if (cub->ray->side_axis == 1)
+	{
+		if (cub->ray->step_y > 0) // Parede Sul
+			cub->render->wall_x = 1.0 - (cub->ray->hit.x - floor(cub->ray->hit.x));
+		else // Parede Norte
+			cub->render->wall_x = cub->ray->hit.x - floor(cub->ray->hit.x);
+	}
+	// if (cub->ray->side_axis == 1)
+	// 	cub->render->wall_x = (cub->ray->hit.x + 0.0001) - floor(cub->ray->hit.x);
 	else
-		cub->render->wall_x = cub->ray->hit.y - floor(cub->ray->hit.y);
+		cub->render->wall_x = (cub->ray->hit.y) - floor(cub->ray->hit.y);
 	cub->render->text_x = cub->render->wall_x * (int)SIZE;
 	if(cub->render->text_x >= (int)SIZE)
 		cub->render->text_x = (int)SIZE - 1;
@@ -48,12 +55,15 @@ void	draw_walls(t_game *cub, int x, int begin, int end)
 	y = begin;
 	while(y < end)
 	{
-		cub->render->text_y = (int) (y - begin) * cub->render->scale;
+		cub->render->text_y = (int)((y - begin) * cub->render->scale) % ((int)SIZE);
 		if(cub->render->text_y >= (int)SIZE)
 			cub->render->text_y = (int)SIZE - 1;
 		cub->render->color = my_mlx_pixel_get_color(&cub->ray->texture, cub->render->text_x, cub->render->text_y);
 		my_mlx_pixel_put_color(cub->bground, x, y, cub->render->color);
 		y++;
+		//printf("\n hit_x: %f\n hit_y: %f\n", cub->ray->hit.x, cub->ray->hit.y);
+		//printf(" Text_x: %d\n Wall_x: %f\n", cub->render->text_x, cub->render->wall_x);
+		//printf(" Text_y: %d\n Color: %d\n", cub->render->text_y, cub->render->color);
 	}
 }
 

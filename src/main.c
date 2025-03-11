@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:50 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/09 20:02:06 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:36:04 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,36 @@ int	extension(char **av)
 	}
 	return (0);
 }
+void	debug_player_position(t_game *cub)
+{
+	int x = (int)cub->player->pos.x;
+	int y = (int)cub->player->pos.y;
 
+	printf("Posição do Player: X=%d, Y=%d\n", x, y);
+	printf("Valor do mapa na posição: %c\n", cub->map[y][x]);
+
+	if (cub->map[y][x] == '1')
+		printf("\n\n ******ERRO! O jogador está dentro de uma parede! ******* \n\n");
+}
 int	gameloop(t_game *cub)
 {
 	draw_background(cub);
+	//debug_player_position(cub);
+	handle_move(cub);
 	render(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->bground->img, 0, 0);
-	handle_move(cub);
 	return(0);
 }
 
 void	load_game(t_game cub)
 {
-	init_mlx(&cub);
+	init_game(&cub);
 	mlx_hook(cub.win, 2, 1L << 0, keypress, &cub);
 	mlx_hook(cub.win, 3, 1L << 1, keyrelease, &cub);
 	mlx_hook(cub.win, 17, 0, quit_game, &cub);
 	mlx_loop_hook(cub.mlx, gameloop , &cub);
 	mlx_loop(cub.mlx);
 }
-
-
 
 int	main(int ac, char **av)
 {

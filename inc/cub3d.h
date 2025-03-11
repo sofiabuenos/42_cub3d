@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/09 16:56:32 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:59:14 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <math.h>
+# include <stdbool.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-mac/mlx.h"
@@ -32,7 +33,6 @@
 # define PI 3.14159265359
 # define ROTATE 0.02
 # define MOVE_SPEED 0.05
-//# define BOUNDARY 0.1
 
 # define ESC	65307
 # define LEFT	65361
@@ -54,6 +54,7 @@ typedef struct s_elements
 	char	*info;
 	
 } t_elements;
+
 
 typedef struct s_coord
 {
@@ -123,6 +124,8 @@ typedef struct s_game
 	char		*file_name;
 	char		**map;
 	char		**path;
+	int			map_row;
+	int			map_col;
 	t_elements	*elements;
 	t_player	*player;
 	t_texture	wall[4];
@@ -141,23 +144,27 @@ typedef struct s_game
 
 /*======= parse =======*/
 int				parse(t_game *cub);
+
 /*======= parse_elements =======*/
 int				check_id(char *str, t_game *cub, int count);
 int				is_valid_id(char *temp);
 int				check_info(char *str, t_game *cub, int count); //https://github.com/widium/Cub3D/blob/main/srcs/engine/raycasting.c#L55
 int				check_RGB(char *str, t_game *cub, int count);
 int				check_path(char *str, t_game *cub, int count);
+
 /*======= parse utils =======*/
 int				word_count(char *str);
 int				there_are_commas(char *str);
 unsigned int	index_to_word(char *str, int nb);
 int				unique_ids(t_game *cub);
+
 /*======= Error =======*/
 void			print_err(char *str);
 void			power_print_err(char *s1, char *s2);
 void			ft_destroy(t_game *cub);
 void			quit(t_game *cub);
 void			free_array(char **str);
+
 /*======= init =======*/
 int				init(char **av, t_game *cub);
 void			print_elements(t_game *cub);
@@ -166,7 +173,7 @@ void			print_elements(t_game *cub);
 
 
 /*======= init game =======*/
-void			init_mlx(t_game *cub);
+void			init_game(t_game *cub);
 void			init_textures(t_game *cub);
 void			get_texture_and_color(t_game *cub);
 void			init_background(t_game *cub);
@@ -203,12 +210,13 @@ void			my_mlx_pixel_put_color(t_texture *bground, int x, int y, int color);
 unsigned int	my_mlx_pixel_get_color(t_texture *wall, int x, int y);
 
 /*======= quit_game =======*/
-int			quit_game(t_game *cub);
+int				quit_game(t_game *cub);
 void			error_msg(t_game *cub, char *msg);
 void			free_textures(t_game *cub);
 
 
 void read_cub_file(char *filename, t_game *game);
 void parse_map(char *line, t_game *game, int row);
+void debug_player_position(t_game *cub);
 
 #endif

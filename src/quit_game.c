@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:16:39 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/09 14:05:22 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:07:47 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	quit_game(t_game *cub)
 {
 	if (!cub)
 		return (1);
-	if (cub->wall)
-		free_textures(cub);
+	//if (cub->wall)
+	free_textures(cub);
 	//if(cub->bground)
 	//	mlx_destroy_image(cub->mlx, cub->bground->img);
 	if (cub->win)
