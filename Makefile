@@ -40,7 +40,7 @@ else
 endif
 
 SRCS =	$(SRCD)main.c $(SRCD)error.c $(SRCD)parsing.c $(SRCD)init.c $(SRCD)parse.utils.c \
-		$(SRCD)parse_elements.c
+		$(SRCD)parse_elements.c $(SRCD)read.c
 
 OBJS = $(patsubst $(SRCD)%.c, $(OBJD)%.o, $(SRCS))
 

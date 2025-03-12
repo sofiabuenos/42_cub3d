@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/02/26 16:22:23 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/03/12 08:42:27 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 # define CUB3D_H
 
 # include <stdio.h>
+# include <stdbool.h>
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-mac/mlx.h"
 
-# define NO "NO"
-# define SO "SO"
-# define WE "WE"
-# define EA "EA"
-# define F "F"
-# define C "C"
+# define NO "NO "
+# define SO "SO "
+# define WE "WE "
+# define EA "EA "
+# define F "F "
+# define C "C "
+
+# define ER_PARAM "Invalid argument. Usage: ./cub3D path_to_file.cub"
+# define ER_FILE "Invalid file. The file must exist and have a .cub extension. Usage: ./cub3D path_to_file.cub"
+# define ER_OPEN "Unable to open file"
+# define ER_EMPTY "Invalid file. The .cub file is empty"
 
 typedef struct s_point
 {
@@ -32,32 +38,38 @@ typedef struct s_point
 	unsigned int	y;
 }					t_point;
 
-// typedef struct s_directions
-// {
-// 	/*data*/
-// } t_directions;
 
-// typedef struct s_colors
+// typedef struct s_elements
 // {
-// 	/*data*/
-// } t_colors;
-
-typedef struct s_elements
-{
-	char	*id;
-	char	*info;
+// 	char	*id;
+// 	char	*info;
 	
-} t_elements;
+// } t_elements;
 
 typedef struct s_cub3d
 {
-	char		*file_name;
-	char		**map;
-	t_elements	*elements;
-}				t_cub3d;
+	char	*file_name;
+	char	*file;
+	char	**map;
+	char	*no_texture;
+	char	*so_texture;
+	char	*we_texture;
+	char	*ea_texture;
+	char	*f_color;
+	char	*c_color;
+	int		fd;
+}			t_cub3d;
 
+
+/*======= init =======*/
+void			init(t_cub3d *cub);
+void			print_elements(t_cub3d *cub);
 /*======= parse =======*/
-int				parse(t_cub3d *cub);
+void			parse(t_cub3d *cub, int ac, char **av);
+/*======= read =======*/
+void			read_file(t_cub3d *cub, char *file);
+void			check_empty_file(t_cub3d *cub);
+void			parse_file(t_cub3d *cub);
 /*======= parse_elements =======*/
 int				check_id(char *str, t_cub3d *cub, int count);
 int				is_valid_id(char *temp);
@@ -71,12 +83,8 @@ unsigned int	index_to_word(char *str, int nb);
 int				unique_ids(t_cub3d *cub);
 /*======= Error =======*/
 void			print_err(char *str);
-void			power_print_err(char *s1, char *s2);
 void			ft_destroy(t_cub3d *cub);
-void			quit(t_cub3d *cub);
+void			quit(t_cub3d *cub, char *str);
 void			free_array(char **str);
-/*======= init =======*/
-int				init(char **av, t_cub3d *cub);
-void			print_elements(t_cub3d *cub);
 
 #endif
