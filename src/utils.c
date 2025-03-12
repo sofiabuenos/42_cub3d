@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:34:29 by sbueno-s          #+#    #+#             */
-/*   Updated: 2025/03/12 14:54:48 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:21:32 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 int	word_count(char *str)
 {
 	int	words;
-
+	int	in_word;	
 	words = 0;
+	in_word = 0;
 	while (*str)
 	{
-		if (!ft_isspace(*str))
+		if (!ft_isspace(*str) && !in_word)
 		{
+			in_word = 1;
 			words++;
-			str++;
-			while (!ft_isspace(*str))
-				str++;
+		}
+		else if (ft_isspace(*str))
+		{
+			in_word = 0;
 		}
 		str++;
 	}
