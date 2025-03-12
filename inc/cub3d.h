@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 08:42:27 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/03/12 12:06:35 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define ER_FILE "Invalid file. The file must exist and have a .cub extension. Usage: ./cub3D path_to_file.cub"
 # define ER_OPEN "Unable to open file"
 # define ER_EMPTY "Invalid file. The .cub file is empty"
+# define ER_ELM "Invalid element format. Usage: ID info. eg: NO path_to_texture.xpm or F 0,255,255"
 
 typedef struct s_point
 {

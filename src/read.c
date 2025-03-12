@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:40:27 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 09:29:17 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/03/12 13:24:40 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,20 +165,43 @@ void	check_duplicate(t_cub3d *cub, char *element, char *texture)
 	}
 }
 
+void	get_description(t_cub3d *cub, char *str, char *info)
+{
+	int	i;
+	int	len;
+	int	j;
+
+	len = ft_strlen(str);
+	if (word_count(str) != 2)
+		quit(cub, ER_ELM);
+	i = index_to_word(str, 2);
+	info = (char *)calloc((len - i + 1), sizeof(char));
+	if (!info)
+		quit(cub, "Memory allocation faliure - get_description");
+	j = 0;
+	while(str[i])
+	{
+		if(ft_isspace(str[i]))
+			i++;
+		info[j++] = str[i++];
+	}
+	info[j] = '\0';
+}
+
 void	assign_texture_or_color(t_cub3d *cub, char *str, char *element)
 {
 	if (!ft_strncmp(element, NO, 3))
-		cub->no_texture = get_description(str);
+		get_description(cub, str, cub->no_texture);
 	else if (!ft_strncmp(element, SO, 3))
-		cub->so_texture = get_description(str);
+		get_description(cub, str, cub->so_texture);
 	else if (!ft_strncmp(element, WE, 3))
-		cub->we_texture = get_description(str);
+		get_description(cub, str, cub->we_texture);
 	else if (!ft_strncmp(element, EA, 3))
-		cub->ea_texture = get_description(str);
+		get_description(cub, str, cub->ea_texture);
 	else if (!ft_strncmp(element, F, 2))
-		cub->f_color = get_description(str);
+		get_description(cub, str, cub->f_color);
 	else if (!ft_strncmp(element, C, 2))
-		cub->c_color = get_description(str);
+		get_description(cub, str, cub->c_color);
 }
 
 void	get_info(t_cub3d *cub, char *str, char *element)

@@ -53,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(OBJD) libft ft_printf minilibx
 	echo "$(CYAN)Linking: $(RESET) $(CFLAGS) $(GREEN)*$(RESET)"
-	$(CC) $(CFLAGS) $(LFLAGS) -I$(INC) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -I$(INC) $(OBJS) $(LFLAGS) -o $(NAME)
 	echo "$(GREEN)All files compiled!$(RESET)"
 
 
