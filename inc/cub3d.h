@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 12:06:35 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:20:38 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,15 @@ void			init(t_cub3d *cub);
 void			print_elements(t_cub3d *cub);
 /*======= parse =======*/
 void			parse(t_cub3d *cub, int ac, char **av);
-/*======= read =======*/
 void			read_file(t_cub3d *cub, char *file);
 void			check_empty_file(t_cub3d *cub);
 void			parse_file(t_cub3d *cub);
+/*======= read =======*/
+char			*check_tabs(t_cub3d *cub, char *str);
+char			*is_element(char *str);
+bool			is_empty_line(char *str);
+void			last_line(t_cub3d *cub, int i, int j);
+void			get_info(t_cub3d *cub, char *str, char *element);
 /*======= parse_elements =======*/
 int				check_id(char *str, t_cub3d *cub, int count);
 int				is_valid_id(char *temp);

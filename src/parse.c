@@ -56,6 +56,67 @@
 // 	return (0);
 // }
 
+void	parse_file(t_cub3d *cub)
+{
+	char	*temp;
+	char	*element;
+	int		j;
+	int		i;
+
+	j = 0;
+	i = -1;
+	while (cub->file[++i])
+	{
+		if (cub->file[i] == '\n')
+		{
+			temp = ft_substr(cub->file, j, (i - j));
+			if (!temp)
+				quit(cub, "Memory allocation issue - parse_file");
+			if (!is_empty_line(temp))
+			{
+				printf("%s\n", temp);
+				element = is_element(temp);
+				if (element)
+					get_info(cub, temp, element);
+			}
+			free(temp);
+			j = i + 1;
+		}
+	}
+	if (j < i)
+		last_line(cub, i, j);
+}
+
+void	check_empty_file(t_cub3d *cub)
+{
+	if (!cub->file[0])
+		quit(cub, ER_EMPTY);
+}
+
+void	read_file(t_cub3d *cub, char *file_name)
+{
+	char	*line;
+	char	*file;
+	char	*temp;
+
+	if ((cub->fd = open(file_name, O_RDONLY)) == -1)
+		quit(cub, ER_OPEN);
+	file = ft_strdup("");
+	while (1)
+	{
+		line = get_next_line(cub->fd);
+		if (!line)
+			break;
+		line = check_tabs(cub, line);
+		temp = file;
+		file = ft_strjoin(temp, line);
+		free(line);
+		free (temp);
+	}
+	cub->file = ft_strdup(file);
+	free(file);
+	close(cub->fd);
+}
 
 void	check_filename(t_cub3d *cub, char **av)
 {

@@ -3,54 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   parse.utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 06:41:42 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/03/12 14:35:04 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	word_count(char *str)
-{
-	int	words;
 
-	words = 0;
-	while (*str)
-	{
-		if (!ft_isspace(*str))
-		{
-			words++;
-			str++;
-			while (!ft_isspace(*str))
-				str++;
-		}
-		str++;
-	}
-	return (words);
+char	*is_element(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (!ft_strncmp(str + i, NO, 3))
+		return (NO);
+	else if (!ft_strncmp(str + i, SO, 3))
+		return(SO);
+	else if (!ft_strncmp(str + i, WE, 3))
+		return (WE);
+	else if (!ft_strncmp(str + i, EA, 3))
+		return (EA);
+	else if (!ft_strncmp(str + i, F, 2))
+		return (F);
+	else if (!ft_strncmp(str + i, C, 2))
+		return (C);
+	else
+		return (NULL);
 }
 
-unsigned int	index_to_word(char *str, int nb)
+void	get_description(t_cub3d *cub, char *str, char *info)
 {
-	int	word;
-	unsigned int	i;
+	int	i;
+	int	len;
+	int	j;
 
-	word = 0;
-	i = 0;
-	while (word < nb && str[i])
+	len = ft_strlen(str);
+	if (word_count(str) != 2)
 	{
-		if (!ft_isspace(str[i]))
-		{
-			word++;
-			if (word == nb)
-				break;
-			while (!ft_isspace(str[i]) && str[i])
-				i++;
-		}
-		i++;
+		printf("%d\n", word_count(str));
+		quit(cub, ER_ELM);
 	}
-	return (i);
+	i = index_to_word(str, 2);
+	info = (char *)calloc((len - i + 1), sizeof(char));
+	if (!info)
+		quit(cub, "Memory allocation faliure - get_description");
+	j = 0;
+	while(str[i])
+	{
+		if(ft_isspace(str[i]))
+			i++;
+		info[j++] = str[i++];
+	}
+	info[j] = '\0';
+}
+
+void	assign_texture_or_color(t_cub3d *cub, char *str, char *element)
+{
+	if (!ft_strncmp(element, NO, 3))
+		get_description(cub, str, cub->no_texture);
+	else if (!ft_strncmp(element, SO, 3))
+		get_description(cub, str, cub->so_texture);
+	else if (!ft_strncmp(element, WE, 3))
+		get_description(cub, str, cub->we_texture);
+	else if (!ft_strncmp(element, EA, 3))
+		get_description(cub, str, cub->ea_texture);
+	else if (!ft_strncmp(element, F, 2))
+		get_description(cub, str, cub->f_color);
+	else if (!ft_strncmp(element, C, 2))
+		get_description(cub, str, cub->c_color);
+}
+
+void	check_duplicate(t_cub3d *cub, char *element, char *texture)
+{
+	if (texture)
+	{
+		if (!ft_strncmp(element, NO, 3))
+			quit(cub, "Duplicate NO texture");
+		else if (!ft_strncmp(element, SO, 3))
+			quit(cub, "Duplicate SO texture");
+		else if (!ft_strncmp(element, WE, 3))
+			quit(cub, "Duplicate WE texture");
+		else if (!ft_strncmp(element, EA, 3))
+			quit(cub, "Duplicate EA texture");
+		else if (!ft_strncmp(element, F, 2))
+			quit(cub, "Duplicate F color");
+		else if (!ft_strncmp(element, C, 2))
+			quit(cub, "Duplicate C color");
+	}
+}
+
+void	get_info(t_cub3d *cub, char *str, char *element)
+{
+	if (!ft_strncmp(element, NO, 3))
+		check_duplicate(cub, element, cub->no_texture);
+	else if (!ft_strncmp(element, SO, 3))
+		check_duplicate(cub, element, cub->so_texture);
+	else if (!ft_strncmp(element, WE, 3))
+		check_duplicate(cub, element, cub->we_texture);
+	else if (!ft_strncmp(element, EA, 3))
+		check_duplicate(cub, element, cub->ea_texture);
+	else if (!ft_strncmp(element, F, 2))
+		check_duplicate(cub, element, cub->f_color);
+	else if (!ft_strncmp(element, C, 2))
+		check_duplicate(cub, element, cub->c_color);
+	assign_texture_or_color(cub, str, element);
 }
 
 // int	there_are_commas(char *str)
@@ -71,34 +132,4 @@ unsigned int	index_to_word(char *str, int nb)
 // 	return (1);
 // }
 
-// int	unique_ids(t_cub3d *cub)
-// {
-// 	int		i;
-// 	int		flags[6] = {0, 0, 0, 0, 0, 0};
 
-// 	i = 0;
-// 	while (i < 6)
-// 	{
-// 		if (ft_strncmp(cub->elements[i].id, NO, 3) == 0)
-// 			 flags[0]++;
-// 		else if (ft_strncmp(cub->elements[i].id, SO, 3) == 0)
-// 			flags[1]++;
-// 		else if (ft_strncmp(cub->elements[i].id, WE, 3) == 0)
-// 			flags[2]++;
-// 		else if (ft_strncmp(cub->elements[i].id, EA, 3) == 0)
-// 			flags[3]++;
-// 		else if (ft_strncmp(cub->elements[i].id, F, 2) == 0)
-// 			flags[4]++;
-// 		else if (ft_strncmp(cub->elements[i].id, C, 2) == 0)
-// 			flags[5]++;
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < 6)
-// 	{
-// 		if (flags[i] != 1)
-// 			return (0); // Retorna 0 se algum ID não estiver presente ou estiver repetido
-// 		i++;
-// 	}
-// 	return (1); // Retorna 1 se todos os IDs estiverem presentes e sem repetição
-// }
