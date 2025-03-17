@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 06:38:44 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2025/03/17 09:13:46 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ void	free_array(char **str)
 	}
 	free(str);
 }
-
-// void	free_elements(t_cub3d *cub)
-// {
-// 	int	i;
-// 	if (cub->elements)
-// 	{
-// 		i = -1;
-// 		while (++i < 6)
-// 		{
-// 			if (cub->elements[i].info)
-// 				free(cub->elements[i].info);
-// 		}
-// 		free(cub->elements);
-// 		cub->elements = NULL;
-// 	}
-// }
 
 void	free_elements(t_cub3d *cub)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 14:20:38 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/17 09:14:13 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@
 # define ER_FILE "Invalid file. The file must exist and have a .cub extension. Usage: ./cub3D path_to_file.cub"
 # define ER_OPEN "Unable to open file"
 # define ER_EMPTY "Invalid file. The .cub file is empty"
-# define ER_ELM "Invalid element format. Usage: ID info. eg: NO path_to_texture.xpm or F 0,255,255"
-
+# define ER_ELMENT "Invalid element format. Usage: ID info. eg: NO path_to_texture.xpm or F 0,255,255"
+# define ER_INCOMPLETE "Game setting incomplete or invalid ID"
+# define ER_EMPTY_LINE "Invalid map. The map must not contain empty lines"
+# define ER_MAPGEN "A valid map is required"
+# define ER_RGB "Invalid RGB format. Colors must be three numbers separated by commas, each ranging from 0 to 255. Example: 0,255,255"
+# define ER_TEXTURE "Invalid path. NO, SO, WE, and EA must be followed by a valid .xpm file path."
 typedef struct s_point
 {
 	unsigned int	x;
@@ -62,35 +66,49 @@ typedef struct s_cub3d
 }			t_cub3d;
 
 
-/*======= init =======*/
+/*====== init ======*/
 void			init(t_cub3d *cub);
 void			print_elements(t_cub3d *cub);
-/*======= parse =======*/
+/*====== parse ======*/
 void			parse(t_cub3d *cub, int ac, char **av);
+void			check_param(t_cub3d *cub, int ac, char **av);
+void			check_filename(t_cub3d *cub, char **av);
 void			read_file(t_cub3d *cub, char *file);
 void			check_empty_file(t_cub3d *cub);
 void			parse_file(t_cub3d *cub);
-/*======= read =======*/
+void			parse_elements(t_cub3d *cub);
+/*==== read_utils ====*/
+void			insert_spaces(char *str, char *new_str);
+int				have_tabs(char *str);
 char			*check_tabs(t_cub3d *cub, char *str);
-char			*is_element(char *str);
 bool			is_empty_line(char *str);
 void			last_line(t_cub3d *cub, int i, int j);
-void			get_info(t_cub3d *cub, char *str, char *element);
-/*======= parse_elements =======*/
-int				check_id(char *str, t_cub3d *cub, int count);
-int				is_valid_id(char *temp);
-int				check_info(char *str, t_cub3d *cub, int count);
-int				check_RGB(char *str, t_cub3d *cub, int count);
-int				check_path(char *str, t_cub3d *cub, int count);
+/*=== parse_elements ===*/
+bool			RGB_ok(char *str);
+bool			commas_ok(char *str);
+bool			str_is_digit(char *str);
+bool			texture_ok(char *str);
+/*=== parse_map ===*/
+void			parse_map(t_cub3d *cub);
 /*======= parse utils =======*/
-int				word_count(char *str);
-int				there_are_commas(char *str);
+char			*is_element(char *str);
+void			get_info(t_cub3d *cub, char *str, char *element);
+void			check_duplicate(t_cub3d *cub, char *element, char *texture);
+void			assign_texture_or_color(t_cub3d *cub, char *str, char *element);
+char			*get_description(t_cub3d *cub, char *str);
+char			*is_element(char *str);
+/*======= Utils =======*/
+void			is_map(t_cub3d *cub, int j);
 unsigned int	index_to_word(char *str, int nb);
-int				unique_ids(t_cub3d *cub);
+int				word_count(char *str);
+void			is_map(t_cub3d *cub, int j);
+bool			followed_line_breaks(char *str);
+void			split_map(t_cub3d *cub, int j);
 /*======= Error =======*/
 void			print_err(char *str);
 void			ft_destroy(t_cub3d *cub);
 void			quit(t_cub3d *cub, char *str);
+void			free_elements(t_cub3d *cub);
 void			free_array(char **str);
 
 #endif

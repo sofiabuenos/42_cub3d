@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 14:35:04 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/17 09:08:54 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,18 @@ char	*is_element(char *str)
 		return (NULL);
 }
 
-void	get_description(t_cub3d *cub, char *str, char *info)
+char	*get_description(t_cub3d *cub, char *str)
 {
-	int	i;
-	int	len;
-	int	j;
+	int		i;
+	int		len;
+	int		j;
+	char	*info;
 
 	len = ft_strlen(str);
 	if (word_count(str) != 2)
 	{
 		printf("%d\n", word_count(str));
-		quit(cub, ER_ELM);
+		quit(cub, ER_ELMENT);
 	}
 	i = index_to_word(str, 2);
 	info = (char *)calloc((len - i + 1), sizeof(char));
@@ -60,22 +61,23 @@ void	get_description(t_cub3d *cub, char *str, char *info)
 		info[j++] = str[i++];
 	}
 	info[j] = '\0';
+	return (info);
 }
 
 void	assign_texture_or_color(t_cub3d *cub, char *str, char *element)
 {
 	if (!ft_strncmp(element, NO, 3))
-		get_description(cub, str, cub->no_texture);
+		cub->no_texture = get_description(cub, str);
 	else if (!ft_strncmp(element, SO, 3))
-		get_description(cub, str, cub->so_texture);
+		cub->so_texture = get_description(cub, str);
 	else if (!ft_strncmp(element, WE, 3))
-		get_description(cub, str, cub->we_texture);
+		cub->we_texture = get_description(cub, str);
 	else if (!ft_strncmp(element, EA, 3))
-		get_description(cub, str, cub->ea_texture);
+		cub->ea_texture = get_description(cub, str);
 	else if (!ft_strncmp(element, F, 2))
-		get_description(cub, str, cub->f_color);
+		cub->f_color = get_description(cub, str);
 	else if (!ft_strncmp(element, C, 2))
-		get_description(cub, str, cub->c_color);
+		cub->c_color = get_description(cub, str);
 }
 
 void	check_duplicate(t_cub3d *cub, char *element, char *texture)
@@ -113,23 +115,3 @@ void	get_info(t_cub3d *cub, char *str, char *element)
 		check_duplicate(cub, element, cub->c_color);
 	assign_texture_or_color(cub, str, element);
 }
-
-// int	there_are_commas(char *str)
-// {
-// 	int	comma;
-// 	int	i;
-
-// 	comma = 0;
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == ',')
-// 			comma++;
-// 		i++;
-// 	}
-// 	if (comma != 2)
-// 		return(power_print_err("Fix RGB format. Must have 3 numbers separated by commas. eg.: 0, 255, 255.: ", str), 0);
-// 	return (1);
-// }
-
-

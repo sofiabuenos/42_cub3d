@@ -10,93 +10,75 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "cub3d.h"
+#include "cub3d.h"
 
-// int	check_path(char *str, t_cub3d *cub, int count)
-// {
-// 	char	*temp;
-// 	int		start;
+bool	texture_ok(char *str)
+{
+	char	*line;
+	int		fd;
+	int		i;
+	if (str)
+	{
+		i = ft_strlen(str);
+		if (i - 5 < 0 || str[i - 5] == '/' || !(ft_strnstr((str + (i - 4)), ".xpm", 4)))
+			return (false);
+	}
+	if (access(str, R_OK) == -1) // READ OK pq ainda n tenho texturas. verificar se precisa X_OK
+		return (false);
+	fd = open(str, O_RDONLY); // verificar se o ficheiro não está vazio.
+	line = get_next_line(fd);
+	if (!line)
+		return (close(fd), false);
+	close(fd);
+	return (true);
+}
 
-// 	start = index_to_word(str, 2);
-// 	temp = ft_substr(str, start, (ft_strlen(str) - start -1));
-// 	if (access(temp, R_OK) == -1) // READ OK pq ainda n tenho texturas. verificar se precisa X_OK
-// 		return (power_print_err("Check path to texture: ", str), 1);
-// 	cub->elements[count].info = ft_strdup(temp);
-// 	if (temp)
-// 		free(temp);
-// 	return (0);
-// }
+bool	str_is_digit(char *str)
+{
+	int	i;
 
-// int	check_RGB(char *str, t_cub3d *cub, int count)
-// {
-// 	char	*temp;
-// 	char	**rgb;
-// 	int		start;
-// 	int		i;
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+	}
+	return (true);
+}
 
-// 	start = index_to_word(str, 2);
-// 	temp = ft_substr(str, start, (ft_strlen(str) - start -1)); //tirar o '\n'
-// 	if (!there_are_commas(temp))
-// 		return (1);
-// 	i = 0;
-// 	rgb = ft_split(temp, ',');
-// 	i = -1;
-// 	while(rgb[++i])
-// 		if (!(ft_atoi(rgb[i]) <= 255 && ft_atoi(rgb[i]) >= 0))
-// 			return (power_print_err("R,G,B colors range is [0,255]: 0, 255, 255.: ", temp), 1);
-// 	if (i != 3)
-// 	return (power_print_err("R,G,B colors must have 3 numbers separated by commas: ", temp), 1);
-// 	cub->elements[count].info = ft_strdup(temp);
-// 	if (temp)
-// 		free(temp);
-// 	free_array(rgb);
-// 	return (0);
-// }
+bool	commas_ok(char *str)
+{
+	int	i;
+	int	commas;
 
-// int	check_info(char *str, t_cub3d *cub, int count)
-// {
-// 	if (!ft_strncmp(cub->elements[count].id, F, 2) || !ft_strncmp(cub->elements[count].id, C, 2))
-// 	{
-// 		if (check_RGB(str, cub, count))
-// 			quit(cub);
-// 	}
-// 	else
-// 	{
-// 		if (check_path(str, cub, count))
-// 			quit(cub);
-// 	}
-// 	return (0);
-// }
+	i = -1;
+	commas = 0;
+	while (str[++i])
+	{
+		if (str[i] == ',')
+			commas++;
+	}
+	if (commas != 2)
+		return (false);
+	return (true);
+}
 
-// int	is_valid_id(char *temp)
-// {
-// 	if (ft_strncmp(temp, NO, 3) == 0 || ft_strncmp(temp, SO, 3) == 0 ||
-// 		ft_strncmp(temp, WE, 3) == 0 || ft_strncmp(temp, EA, 3) == 0 ||
-// 		ft_strncmp(temp, F, 2) == 0 || ft_strncmp(temp, C, 2) == 0)
-// 		return (1);
-// 	return (0);
-// }
+bool	RGB_ok(char *str)
+{
+	char	**rgb;
+	int		i;
 
-// int	check_id(char *str, t_cub3d *cub, int count)
-// {
-// 	char			*temp;
-// 	unsigned int	i;
-// 	unsigned int	j;
-// 	i = 0;
-// 	while (ft_isspace(str[i]))
-// 		i++;
-// 	j = i;
-// 	while (!ft_isspace(str[j]))
-// 		j++;
-// 	temp = ft_substr(str, i, j - i);
-// 	if (!is_valid_id(temp))
-// 	{
-// 		power_print_err("Invalid ID: ", temp);
-// 		free(temp);
-// 		quit(cub);
-// 	}
-// 	cub->elements[count].id = ft_strdup(temp);
-// 	free(temp);
-// 	return (0);
-// }
-
+	if (commas_ok(str) == false)
+		return (false);
+	rgb = ft_split(str, ',');
+	i = -1;
+	while (rgb[++i])
+	{
+		if (str_is_digit(rgb[i]) == false || !(ft_atoi(rgb[i]) <= 255 && ft_atoi(rgb[i]) >= 0))
+			return (free_array(rgb), false);
+	}
+	if (i != 3)
+		return (free_array(rgb), false);
+	free_array(rgb);
+	return (true);
+}

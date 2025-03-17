@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:40:27 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/12 14:33:34 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/17 09:06:40 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,36 +81,12 @@ void	last_line(t_cub3d *cub, int i, int j)
 {
 	char	*temp;
 
-	temp = ft_substr(cub->file, j, (i - j + 1));
+	temp = ft_substr(cub->file, j, (i - j));
 	if (!temp)
 		quit(cub, "Memory allocation issue - parse_file");
 	if (!is_empty_line(temp))
 	{
-		printf("%s\n", temp);
+		printf("\n\n%s\n", temp);
 	}
 	free(temp);
 }
-
-
-
-// void	split_map(t_cub3d *cub)
-// {
-// 	int	count;
-// 	int	i;
-
-// 	count = 0;
-// 	i = -1;
-// 	while (cub->line_file[++i])
-// 	{
-// 		if (cub->line_file[i] == '\n')
-// 			count++;
-// 	}
-// 	cub->file_cpy = (char *)malloc(sizeof(char *) * (count + 1));
-// 	if (!cub->file_cpy)
-// 		quit(cub, ER_ALLOC, " - split_map");
-	
-// 	// cub->file_cpy = ft_split(cub->line_file, '\n');
-// 	// i = -1;
-// 	// while (cub->file_cpy[++i])
-// 	// 	printf("%s\n", cub->file_cpy[i]);
-// }
