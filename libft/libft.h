@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 12:55:38 by sbueno-s          #+#    #+#             */
-/*   Updated: 2025/03/08 18:50:17 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:57:33 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <ctype.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
+# include <strings.h>
 # include <stdio.h>
 # include <stddef.h>
 # include <fcntl.h>
@@ -68,7 +68,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 /*extra*/
 int		ft_isspace(int c);
-int		ft_strcmp(const char *s1, const char *s2);
 
 /*bonus prototypes*/
 t_list	*ft_lstnew(void *content);

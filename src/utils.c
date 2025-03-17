@@ -5,45 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 16:23:34 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/11 13:38:11 by shrodrig         ###   ########.fr       */
+/*   Created: 2025/03/12 14:34:29 by sbueno-s          #+#    #+#             */
+/*   Updated: 2025/03/17 15:07:56 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	convert_to_rgb(char	*colors, t_game *cub)
+bool	followed_line_breaks(char *str)
 {
-	char	**str;
-	int		r;
-	int		g;
-	int		b;
-	
-	str = ft_split(colors, ',');
-	if(!str || !str[0] || !str[1] || !str[2])
-		error_msg(cub, "Fail to convert colors");
-	r = ft_atoi(str[0]);
-	g = ft_atoi(str[1]);
-	b = ft_atoi(str[2]);
-	free_array(str);
-	return (0 << 24 | r << 16 | g << 8 | b);
-}
+	int	i;
 
-void	my_mlx_pixel_put_color(t_texture *bground, int x, int y, int color)
-{
-	char	*pixel;
-
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	i = -1;
+	while (str[++i])
 	{
-		pixel = bground->addr + (y * bground->size_line + x * (bground->bpp / 8));
-		*(unsigned int *)pixel = color;
+		if (str[i] == '\n' && str[i + 1] && str[i + 1] == '\n')
+			return (true);
 	}
+	return (false);
 }
 
-unsigned int	my_mlx_pixel_get_color(t_texture *wall, int x, int y)
+void	split_map(t_game *cub, int j)
 {
-	char	*pixel;
-
-	pixel = wall->addr + (y * wall->size_line + x * (wall->bpp / 8));
-	return (*(unsigned int *)pixel);
+	if (followed_line_breaks(cub->file + j))
+		quit(cub, ER_EMPTY_LINE);
+	cub->map = ft_split(cub->file + j, '\n');
+	// if (cub->map)
+	// {
+	// 	int	i = -1;
+	// 	while (cub->map[++i])
+	// 		printf("%s\n", cub->map[i]);
+	// }
 }
+
+void	is_map(t_game *cub, int j)
+{
+	if (!cub->no_texture || !cub->so_texture ||
+		!cub->we_texture || !cub->ea_texture ||
+		!cub->f_color || !cub->c_color)
+		quit(cub, ER_INCOMPLETE);
+	split_map(cub, j); 
+}
+
+int	word_count(char *str)
+{
+	int	words;
+	int	in_word;
+
+	words = 0;
+	in_word = 0;
+	while (*str)
+	{
+		if (!ft_isspace(*str) && !in_word)
+		{
+			in_word = 1;
+			words++;
+		}
+		else if (ft_isspace(*str))
+			in_word = 0;
+		str++;
+	}
+	return (words);
+}
+
+unsigned int	index_to_word(char *str, int nb)
+{
+	int	word;
+	unsigned int	i;
+
+	word = 0;
+	i = 0;
+	while (word < nb && str[i])
+	{
+		if (!ft_isspace(str[i]))
+		{
+			word++;
+			if (word == nb)
+				break;
+			while (!ft_isspace(str[i]) && str[i])
+				i++;
+		}
+		i++;
+	}
+	return (i);
+}
+
+

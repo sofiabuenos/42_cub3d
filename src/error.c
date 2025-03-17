@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/09 14:26:35 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:46:51 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,7 @@
 void	print_err(char *str)
 {
 	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n", 2);
-}
-
-void	power_print_err(char *s1, char *s2)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(s2, 2);
-	ft_putstr_fd("\n", 2);
+	ft_printf("%s\n", str);
 }
 
 void	free_array(char **str)
@@ -44,34 +35,58 @@ void	free_array(char **str)
 
 void	free_elements(t_game *cub)
 {
-	int	i;
-	if (cub->elements)
-	{
-		i = -1;
-		while (++i < 6)
-		{
-			if (cub->elements[i].info)
-				free(cub->elements[i].info);
-		}
-		free(cub->elements);
-		cub->elements = NULL;
-	}
+	if (cub->c_color)
+		free(cub->c_color);
+	if (cub->f_color)
+		free(cub->f_color);
+	if (cub->no_texture)
+		free(cub->no_texture);
+	if (cub->so_texture)
+		free(cub->so_texture);
+	if (cub->we_texture)
+		free(cub->we_texture);
+	if (cub->ea_texture)
+		free(cub->ea_texture);
 }
-
 
 void	ft_destroy(t_game *cub)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (cub->wall[i].img)
+			mlx_destroy_image(cub->mlx, cub->wall[i].img);
+	}
+	if(cub->bground->img)
+		mlx_destroy_image(cub->mlx, cub->bground->img);
+	if (cub->win)
+		mlx_destroy_window(cub->mlx, cub->win);
+	if (cub->mlx)
+		mlx_destroy_display(cub->mlx);
+}
+
+void	quit(t_game *cub, char *str)
+{
+	print_err(str);
 	if(cub)
 	{
 		if (cub->file_name)
 			free(cub->file_name);
 		free_elements(cub);
+		if(cub->map)
+			free_array(cub->map);
+		ft_destroy(cub);
+		if (cub->player)
+			free(cub->player);
+		if (cub->bground)
+			free(cub->bground);
+		if (cub->render)
+			free(cub->render);
+		if (cub->ray)
+			free(cub->ray);
+		free(cub->mlx);
 	}
-}
-
-void	quit(t_game *cub)
-{
-	printf("\nentrei na quit\n");
-	ft_destroy(cub);
 	exit(EXIT_FAILURE);
 }

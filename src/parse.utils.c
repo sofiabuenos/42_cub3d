@@ -6,99 +6,111 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/09 16:41:34 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:58:16 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	word_count(char *str)
+char	*is_element(char *str)
 {
-	int	words;
-
-	words = 0;
-	while (*str)
-	{
-		if (!ft_isspace(*str))
-		{
-			words++;
-			str++;
-			while (!ft_isspace(*str))
-				str++;
-		}
-		str++;
-	}
-	return (words);
-}
-
-unsigned int	index_to_word(char *str, int nb)
-{
-	int	word;
-	unsigned int	i;
-
-	word = 0;
-	i = 0;
-	while (word < nb && str[i])
-	{
-		if (!ft_isspace(str[i]))
-		{
-			word++;
-			if (word == nb)
-				break;
-			while (!ft_isspace(str[i]) && str[i])
-				i++;
-		}
-		i++;
-	}
-	return (i);
-}
-
-int	there_are_commas(char *str)
-{
-	int	comma;
 	int	i;
 
-	comma = 0;
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ',')
-			comma++;
+	while (str[i] == ' ')
 		i++;
-	}
-	if (comma != 2)
-		return(power_print_err("Fix RGB format. Must have 3 numbers separated by commas. eg.: 0, 255, 255.: ", str), 0);
-	return (1);
+	if (!ft_strncmp(str + i, NO, 3))
+		return (NO);
+	else if (!ft_strncmp(str + i, SO, 3))
+		return(SO);
+	else if (!ft_strncmp(str + i, WE, 3))
+		return (WE);
+	else if (!ft_strncmp(str + i, EA, 3))
+		return (EA);
+	else if (!ft_strncmp(str + i, F, 2))
+		return (F);
+	else if (!ft_strncmp(str + i, C, 2))
+		return (C);
+	else
+		return (NULL);
 }
 
-int	unique_ids(t_game *cub)
+char	*get_description(t_game *cub, char *str)
 {
 	int		i;
-	int		flags[6] = {0, 0, 0, 0, 0, 0};
+	int		len;
+	int		j;
+	char	*info;
 
-	i = 0;
-	while (i < 6)
+	len = ft_strlen(str);
+	if (word_count(str) != 2)
 	{
-		if (ft_strncmp(cub->elements[i].id, NO, 3) == 0)
-			 flags[0]++;
-		else if (ft_strncmp(cub->elements[i].id, SO, 3) == 0)
-			flags[1]++;
-		else if (ft_strncmp(cub->elements[i].id, WE, 3) == 0)
-			flags[2]++;
-		else if (ft_strncmp(cub->elements[i].id, EA, 3) == 0)
-			flags[3]++;
-		else if (ft_strncmp(cub->elements[i].id, F, 2) == 0)
-			flags[4]++;
-		else if (ft_strncmp(cub->elements[i].id, C, 2) == 0)
-			flags[5]++;
-		i++;
+		printf("%d\n", word_count(str));
+		quit(cub, ER_ELMENT);
 	}
-	i = 0;
-	while (i < 6)
+	i = index_to_word(str, 2);
+	info = (char *)calloc((len - i + 1), sizeof(char));
+	if (!info)
+		quit(cub, "Memory allocation faliure - get_description");
+	j = 0;
+	while(str[i])
 	{
-		if (flags[i] != 1)
-			return (0); // Retorna 0 se algum ID não estiver presente ou estiver repetido
-		i++;
+		if(ft_isspace(str[i]))
+			i++;
+		info[j++] = str[i++];
 	}
-	return (1); // Retorna 1 se todos os IDs estiverem presentes e sem repetição
+	info[j] = '\0';
+	return (info);
+}
+
+void	assign_texture_or_color(t_game *cub, char *str, char *element)
+{
+	if (!ft_strncmp(element, NO, 3))
+		cub->no_texture = get_description(cub, str);
+	else if (!ft_strncmp(element, SO, 3))
+		cub->so_texture = get_description(cub, str);
+	else if (!ft_strncmp(element, WE, 3))
+		cub->we_texture = get_description(cub, str);
+	else if (!ft_strncmp(element, EA, 3))
+		cub->ea_texture = get_description(cub, str);
+	else if (!ft_strncmp(element, F, 2))
+		cub->f_color = get_description(cub, str);
+	else if (!ft_strncmp(element, C, 2))
+		cub->c_color = get_description(cub, str);
+}
+
+void	check_duplicate(t_game *cub, char *element, char *texture)
+{
+	if (texture)
+	{
+		if (!ft_strncmp(element, NO, 3))
+			quit(cub, "Duplicate NO texture");
+		else if (!ft_strncmp(element, SO, 3))
+			quit(cub, "Duplicate SO texture");
+		else if (!ft_strncmp(element, WE, 3))
+			quit(cub, "Duplicate WE texture");
+		else if (!ft_strncmp(element, EA, 3))
+			quit(cub, "Duplicate EA texture");
+		else if (!ft_strncmp(element, F, 2))
+			quit(cub, "Duplicate F color");
+		else if (!ft_strncmp(element, C, 2))
+			quit(cub, "Duplicate C color");
+	}
+}
+
+void	get_info(t_game *cub, char *str, char *element)
+{
+	if (!ft_strncmp(element, NO, 3))
+		check_duplicate(cub, element, cub->no_texture);
+	else if (!ft_strncmp(element, SO, 3))
+		check_duplicate(cub, element, cub->so_texture);
+	else if (!ft_strncmp(element, WE, 3))
+		check_duplicate(cub, element, cub->we_texture);
+	else if (!ft_strncmp(element, EA, 3))
+		check_duplicate(cub, element, cub->ea_texture);
+	else if (!ft_strncmp(element, F, 2))
+		check_duplicate(cub, element, cub->f_color);
+	else if (!ft_strncmp(element, C, 2))
+		check_duplicate(cub, element, cub->c_color);
+	assign_texture_or_color(cub, str, element);
 }

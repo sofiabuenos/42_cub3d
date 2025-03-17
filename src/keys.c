@@ -6,11 +6,17 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:35:13 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/03 16:44:33 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:27:38 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	exit_game(t_game *cub)
+{
+	quit(cub, "goodbye");
+	return (0);
+}
 
 int	keypress(int keycode, t_game *cub)
 {
@@ -32,7 +38,7 @@ int	keypress(int keycode, t_game *cub)
 int	keyrelease(int keycode, t_game *cub)
 {
 	if (keycode == ESC)
-		quit_game(cub);	
+		exit_game(cub);
 	if (keycode == W)
 		cub->key.foward = 0;
 	else if (keycode == S)

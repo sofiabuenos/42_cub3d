@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:16:23 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/11 15:24:12 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:22:19 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	get_delta_distance_x(t_game *cub, double ray_dir_x)
 	}
 }
 
-void	dda(t_game *cub) //Algoritmo Digital Differential Analyzer (DDA)
+void	dda(t_game *cub)
 {
 	int	hit;
 
@@ -63,37 +63,9 @@ void	dda(t_game *cub) //Algoritmo Digital Differential Analyzer (DDA)
 			cub->ray->map_y += cub->ray->step_y;
 			cub->ray->side_axis = 1; // Colisão eixo y (vertical)
 		}
-		// if (cub->map[cub->ray->map_y][cub->ray->map_x] == '1' || cub->ray->map_y > cub->map_row
-		// 	|| cub->ray->map_x > cub->map_col || cub->ray->map_y < 0 || cub->ray->map_x < 0 ) // Se atingiu uma parede ('1' no mapa), parar o loop
 		if(cub->map[cub->ray->map_y][cub->ray->map_x] == '1')
-		{
-			//printf("\nCOLISAO DDA\n");
 			hit = 1;
-		}
 	}
-}
-
-void	ray_info(t_game *cub, double ray_angle)
-{
-	cub->ray->dir.x = cos(ray_angle);
-	cub->ray->dir.y = sin(ray_angle);
-	cub->ray->map_x = (int)cub->player->pos.x;
-	cub->ray->map_y = (int)cub->player->pos.y;
-	cub->ray->delta.x = fabs(1 / cub->ray->dir.x); //Comprimento do raio de uma borda da célula até a próxima - (INICIAL, depois e atualizado)
-	cub->ray->delta.y = fabs(1 / cub->ray->dir.y);
-	get_delta_distance_x(cub, cub->ray->dir.x);
-	get_delta_distance_y(cub, cub->ray->dir.y);
-	dda(cub);
-	if (cub->ray->side_axis == 0)
-		cub->ray->hit_dist = cub->ray->side.x - cub->ray->delta.x;
-	else
-		cub->ray->hit_dist = cub->ray->side.y - cub->ray->delta.y;
-	cub->ray->hit.x = cub->player->pos.x + cub->ray->hit_dist * cub->ray->dir.x;
-	cub->ray->hit.y = cub->player->pos.y + cub->ray->hit_dist * cub->ray->dir.y;
-	get_texture_index(cub);
-	//printf("\nDistancia da parede: %f\n", cub->ray->hit_dist);
-	//printf("Posição da parede: X: %f, Y: %f\n", cub->ray->hit.x, cub->ray->hit.y);
-	//printf("Mapa: X: %d, Y: %d\n", cub->ray->map_x, cub->ray->map_y);
 }
 
 void	get_texture_index(t_game *cub)
@@ -113,3 +85,25 @@ void	get_texture_index(t_game *cub)
 			cub->ray->texture = cub->wall[0]; // Parede Norte
 	}
 }
+
+void	ray_data(t_game *cub, double ray_angle)
+{
+	cub->ray->dir.x = cos(ray_angle);
+	cub->ray->dir.y = sin(ray_angle);
+	cub->ray->map_x = (int)cub->player->pos.x;
+	cub->ray->map_y = (int)cub->player->pos.y;
+	cub->ray->delta.x = fabs(1 / cub->ray->dir.x); //Comprimento do raio de uma borda da célula até a próxima - (INICIAL, depois e atualizado)
+	cub->ray->delta.y = fabs(1 / cub->ray->dir.y);
+	get_delta_distance_x(cub, cub->ray->dir.x);
+	get_delta_distance_y(cub, cub->ray->dir.y);
+	dda(cub);
+	if (cub->ray->side_axis == 0)
+		cub->ray->hit_dist = cub->ray->side.x - cub->ray->delta.x;
+	else
+		cub->ray->hit_dist = cub->ray->side.y - cub->ray->delta.y;
+	cub->ray->hit.x = cub->player->pos.x + cub->ray->hit_dist * cub->ray->dir.x;
+	cub->ray->hit.y = cub->player->pos.y + cub->ray->hit_dist * cub->ray->dir.y;
+	get_texture_index(cub);
+}
+
+
