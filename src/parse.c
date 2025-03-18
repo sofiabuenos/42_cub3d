@@ -44,6 +44,7 @@ void	parse_file(t_game *cub)
 					get_info(cub, temp, element);
 				else 
 				{
+					free(temp);
 					is_map(cub, j);
 					break;
 				}

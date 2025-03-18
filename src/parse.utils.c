@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 14:58:16 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:58:59 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*is_element(char *str)
 		return (NULL);
 }
 
-char	*get_description(t_game *cub, char *str)
+/*char	*get_description(t_game *cub, char *str)
 {
 	int		i;
 	int		len;
@@ -45,7 +45,7 @@ char	*get_description(t_game *cub, char *str)
 	len = ft_strlen(str);
 	if (word_count(str) != 2)
 	{
-		printf("%d\n", word_count(str));
+		printf("%d\n", word_count(str)); //porque?
 		quit(cub, ER_ELMENT);
 	}
 	i = index_to_word(str, 2);
@@ -61,7 +61,35 @@ char	*get_description(t_game *cub, char *str)
 	}
 	info[j] = '\0';
 	return (info);
+}*/
+
+char	*get_description(t_game *cub, char *str)
+{
+	int		i;
+	int		len;
+	int		j;
+	char	*info;
+
+	len = ft_strlen(str);
+	if (word_count(str) != 2)
+	{
+		printf("%d\n", word_count(str)); // Debug
+		free(str);
+		quit(cub, ER_ELMENT);
+	}
+	i = index_to_word(str, 2);
+	printf("\n VAlor de i: %d\n", i);
+	info = (char *)calloc((len - i + 1), sizeof(char));
+	if (!info)
+		quit(cub, "Memory allocation failure - get_description");
+	j = 0;
+	while (str[i] && !ft_isspace(str[i]))  // Copia apenas a segunda palavra
+		info[j++] = str[i++];
+	info[j] = '\0';
+	printf("STRING(info):%s\n", info);
+	return (info);
 }
+
 
 void	assign_texture_or_color(t_game *cub, char *str, char *element)
 {
@@ -79,10 +107,11 @@ void	assign_texture_or_color(t_game *cub, char *str, char *element)
 		cub->c_color = get_description(cub, str);
 }
 
-void	check_duplicate(t_game *cub, char *element, char *texture)
+void	check_duplicate(t_game *cub, char *element, char *texture, char *str)
 {
 	if (texture)
 	{
+		free(str);
 		if (!ft_strncmp(element, NO, 3))
 			quit(cub, "Duplicate NO texture");
 		else if (!ft_strncmp(element, SO, 3))
@@ -101,16 +130,16 @@ void	check_duplicate(t_game *cub, char *element, char *texture)
 void	get_info(t_game *cub, char *str, char *element)
 {
 	if (!ft_strncmp(element, NO, 3))
-		check_duplicate(cub, element, cub->no_texture);
+		check_duplicate(cub, element, cub->no_texture, str);
 	else if (!ft_strncmp(element, SO, 3))
-		check_duplicate(cub, element, cub->so_texture);
+		check_duplicate(cub, element, cub->so_texture, str);
 	else if (!ft_strncmp(element, WE, 3))
-		check_duplicate(cub, element, cub->we_texture);
+		check_duplicate(cub, element, cub->we_texture, str);
 	else if (!ft_strncmp(element, EA, 3))
-		check_duplicate(cub, element, cub->ea_texture);
+		check_duplicate(cub, element, cub->ea_texture, str);
 	else if (!ft_strncmp(element, F, 2))
-		check_duplicate(cub, element, cub->f_color);
+		check_duplicate(cub, element, cub->f_color, str);
 	else if (!ft_strncmp(element, C, 2))
-		check_duplicate(cub, element, cub->c_color);
+		check_duplicate(cub, element, cub->c_color, str);
 	assign_texture_or_color(cub, str, element);
 }

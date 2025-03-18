@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 18:46:51 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:00:30 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	print_err(char *str)
 {
-	ft_putstr_fd("Error\n", 2);
-	ft_printf("%s\n", str);
+	if(*str)
+	{
+		ft_putstr_fd("Error\n", 2);
+		ft_printf("%s\n", str);
+	}
 }
 
 void	free_array(char **str)
@@ -74,6 +77,8 @@ void	quit(t_game *cub, char *str)
 	{
 		if (cub->file_name)
 			free(cub->file_name);
+		if (cub->file)
+			free(cub->file);
 		free_elements(cub);
 		if(cub->map)
 			free_array(cub->map);

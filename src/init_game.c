@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 16:19:36 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 14:59:54 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:31:01 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,13 @@ void	init_textures(t_game *cub)
 	
 	i = -1;
 	t_size = (int)SIZE;
-	texture_path = (char **)malloc(sizeof(char *) * 5);
+	texture_path = (char **)malloc(sizeof(char *) * 4);
 	if(!texture_path)
 		quit(cub, "Memory allocation fail - texture_path");
 	texture_path[0] = cub->no_texture;
 	texture_path[1] = cub->so_texture;
 	texture_path[2] = cub->ea_texture;
 	texture_path[3] = cub->we_texture;
-	texture_path[4] = NULL;
 	while (++i < 4)
 	{
 		cub->wall[i].img = mlx_xpm_file_to_image(cub->mlx, texture_path[i], &t_size, &t_size);
@@ -61,7 +60,7 @@ void	init_textures(t_game *cub)
 		if (!cub->wall[i].addr)
 			quit(cub, "Fail to get texture data adress");
 	}
-	free_array(texture_path);
+	free(texture_path);
 }
 
 void	init_player(t_game	*cub)

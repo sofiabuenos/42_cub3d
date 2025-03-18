@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:35:13 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 19:27:38 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:01:13 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exit_game(t_game *cub)
 {
-	quit(cub, "goodbye");
+	quit(cub, "");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 18:48:49 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:11:06 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	check_is_empty(t_game *cub, char *row);
 /*======= parse utils =======*/
 char			*is_element(char *str);
 void			get_info(t_game *cub, char *str, char *element);
-void			check_duplicate(t_game *cub, char *element, char *texture);
+void			check_duplicate(t_game *cub, char *element, char *texture, char *str);
 void			assign_texture_or_color(t_game *cub, char *str, char *element);
 char			*get_description(t_game *cub, char *str);
 char			*is_element(char *str);

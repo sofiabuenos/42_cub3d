@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 17:55:37 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 19:23:34 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:57:56 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	get_player_position(t_game *cub, char **map)
 				return;
 			}
 		}
-		// if (cub->player->pov == 0)
-		// 	quit(cub, "Map is not valid: Player is not set");
 	}
+	if (cub->player->pov == 0)
+		 	quit(cub, "Invalid map. Player is not set");
 }
 
-void	check_is_empty(t_game *cub, char *row)
+void	check_is_empty(t_game *cub, char *row) // ja e feita essa verificacao
 {
 	while (*row == ' ' || *row == '\n')
 		row++;
@@ -70,20 +70,20 @@ void	check_map(t_game *cub, int y)
 	while(cub->map[y][++x])
 	{
 		if (!ft_strchr("01NSEW \n", cub->map[y][x]))
-			quit(cub, "Map is not valid: There is an invalid character");
+			quit(cub, "Invalid map. There is an invalid character");
 		if (ft_strchr("0NSEW", cub->map[y][x]))
 		{
 			if (ft_strchr("NSEW", cub->map[y][x]))
 				count_player++;
 			if(count_player > 1)
-				quit(cub, "Map is not valid: There is more than 1 player");
-			if(x == '0' || y == '0' || !cub->map[y + 1]
-				|| (size_t)x >= ft_strlen(cub->map[y - 1])
+				quit(cub, "Invalid map. There is more than 1 player");
+			if(x == 0 || y == 0 || !cub->map[y + 1]
 				|| (size_t)x >= ft_strlen(cub->map[y + 1])
+				|| (size_t)x >= ft_strlen(cub->map[y - 1])
 				|| cub->map[y][x + 1] == '\n' || cub->map[y][x + 1] == '\0'
 				|| cub->map[y][x + 1] == ' ' || cub->map[y][x - 1] == ' '
 				|| cub->map[y + 1][x] == ' ' || cub->map[y - 1][x] == ' ')
-				quit(cub, "Map is not closed/surrounded by walls");
+				quit(cub, "Invalid Map. It is not closed/surrounded by walls");
 		}
 	}
 }
@@ -97,7 +97,7 @@ void	parse_map(t_game *cub)
 	y = -1;
 	while(cub->map[++y])
 	{
-		check_is_empty(cub, cub->map[y]);
+		check_is_empty(cub, cub->map[y]); //verificar com a sofia
 		check_map(cub, y);
 	}
 	get_player_position(cub, cub->map);

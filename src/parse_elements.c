@@ -30,6 +30,7 @@ bool	texture_ok(char *str)
 	if (!line)
 		return (close(fd), false);
 	close(fd);
+	free(line);
 	return (true);
 }
 
