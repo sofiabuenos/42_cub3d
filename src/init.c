@@ -6,13 +6,13 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:29:48 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 14:55:18 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:38:20 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init(t_game *cub)
+/*void	init(t_game *cub)
 {
 	ft_bzero(cub, sizeof(t_game));
 	cub->player = (t_player *)ft_calloc(1, sizeof(t_player));
@@ -31,7 +31,7 @@ void	init(t_game *cub)
 	ft_bzero(&cub->key, sizeof(t_key));
 	cub->ceiling = -1;
 	cub->floor = -1;
-}
+}*/
 
 void	print_elements(t_game *cub)
 {

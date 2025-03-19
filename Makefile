@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/17 18:57:53 by sbueno-s          #+#    #+#              #
-#    Updated: 2025/03/17 18:58:11 by shrodrig         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 RESET	= \033[0m
 BLACK	= \033[1;30m
 RED	= \033[1;31m
@@ -50,10 +38,10 @@ else
 	LFLAGS += -L $(MLXD) -lmlx -I$(MLXD) -lXext -lX11 -lm
 endif
 
-SRCS =	$(SRCD)main.c $(SRCD)error.c $(SRCD)parse.c $(SRCD)init.c $(SRCD)parse.utils.c \
+SRCS =	$(SRCD)main.c $(SRCD)error.c $(SRCD)parse.c $(SRCD)init.c $(SRCD)parse_utils.c \
 		$(SRCD)parse_elements.c $(SRCD)read_utils.c $(SRCD)utils.c $(SRCD)parse_map.c \
 		$(SRCD)init_game.c $(SRCD)keys.c $(SRCD)moves.c $(SRCD)raycast.c $(SRCD)render.c \
-		$(SRCD)render_utils.c
+		$(SRCD)render_utils.c $(SRCD)parse_check.c
 
 OBJS = $(patsubst $(SRCD)%.c, $(OBJD)%.o, $(SRCS))
 

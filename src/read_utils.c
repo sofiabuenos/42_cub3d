@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:40:27 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/17 12:16:41 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:25:24 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*check_tabs(t_game *cub, char *str)
 	if (!new_str)
 		quit(cub, "Memory allocation issue - check_tabs");
 	insert_spaces(str, new_str);
-	return(new_str);
+	return (new_str);
 }
 
 bool	is_empty_line(char *str)

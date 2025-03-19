@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:23:34 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 15:10:29 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:44:59 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	convert_to_argb(char *colors, t_game *cub)
 	int		r;
 	int		g;
 	int		b;
-	
+
 	str = ft_split(colors, ',');
-	if(!str || !str[0] || !str[1] || !str[2])
+	if (!str || !str[0] || !str[1] || !str[2])
 		quit(cub, "Fail to convert colors for ARGB");
 	r = ft_atoi(str[0]);
 	g = ft_atoi(str[1]);
@@ -35,7 +35,7 @@ void	my_mlx_pixel_put_color(t_texture *bground, int x, int y, int color)
 
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		pixel = bground->addr + (y * bground->size_line + x * (bground->bpp / 8));
+		pixel = bground->addr + (y * bground->size_line + x * bground->bpp / 8);
 		*(unsigned int *)pixel = color;
 	}
 }

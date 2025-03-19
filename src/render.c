@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:26 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 18:22:36 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:07:37 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_background(t_game *cub)
 
 	y = -1;
 	cub->ceiling = convert_to_argb(cub->c_color, cub);
-	cub->floor =convert_to_argb(cub->f_color, cub);
+	cub->floor = convert_to_argb(cub->f_color, cub);
 	color = cub->ceiling;
 	while (++y < HEIGHT)
 	{
@@ -34,31 +34,38 @@ void	draw_background(t_game *cub)
 	}
 }
 
-void	draw_walls(t_game *cub, int x, int begin, int end)
+void	get_wall_collision(t_game *cub)
 {
-	int	y;
-	
 	if (cub->ray->side_axis == 1)
 	{
-		if (cub->ray->step_y > 0) // Parede Sul
-			cub->render->wall_x = 1.0 - (cub->ray->hit.x - floor(cub->ray->hit.x));
-		else // Parede Norte
+		if (cub->ray->step_y > 0)
+			cub->render->wall_x = 1.0 - (cub->ray->hit.x - \
+			floor(cub->ray->hit.x));
+		else
 			cub->render->wall_x = cub->ray->hit.x - floor(cub->ray->hit.x);
 	}
 	else
 		cub->render->wall_x = (cub->ray->hit.y) - floor(cub->ray->hit.y);
+}
+
+void	draw_walls(t_game *cub, int x, int begin, int end)
+{
+	int	y;
+
+	get_wall_collision(cub);
 	cub->render->text_x = cub->render->wall_x * (int)SIZE;
-	if(cub->render->text_x >= (int)SIZE)
+	if (cub->render->text_x >= (int)SIZE)
 		cub->render->text_x = (int)SIZE - 1;
 	cub->render->wall_height = end - begin;
 	cub->render->scale = (double)SIZE / cub->render->wall_height;
 	y = begin - 1;
-	while(++y < end)
+	while (++y < end)
 	{
-		cub->render->text_y = (int)((y - begin) * cub->render->scale) % ((int)SIZE);
-		if(cub->render->text_y >= (int)SIZE)
+		cub->render->text_y = (int)((y - begin) * cub->render->scale) % SIZE;
+		if (cub->render->text_y >= (int)SIZE)
 			cub->render->text_y = (int)SIZE - 1;
-		cub->render->color = my_mlx_pixel_get_color(&cub->ray->texture, cub->render->text_x, cub->render->text_y);
+		cub->render->color = my_mlx_pixel_get_color(&cub->ray->texture, \
+		cub->render->text_x, cub->render->text_y);
 		my_mlx_pixel_put_color(cub->bground, x, y, cub->render->color);
 	}
 }
@@ -67,15 +74,17 @@ void	render(t_game *cub)
 {
 	int		x;
 	double	wall_dist;
-	
+
 	x = 0;
 	cub->render->text_step = cub->fov / WIDTH;
-	while(x < WIDTH)
+	while (x < WIDTH)
 	{
-		cub->render->texture_pos = cub->player->angle - (cub->fov / 2) + (x * cub->render->text_step);
+		cub->render->texture_pos = cub->player->angle - (cub->fov / 2) \
+		+ (x * cub->render->text_step);
 		ray_data(cub, cub->render->texture_pos);
-		wall_dist = HEIGHT / (cub->ray->hit_dist * cos(cub->render->texture_pos - cub->player->angle));
-		if(wall_dist <= 0)
+		wall_dist = HEIGHT / (cub->ray->hit_dist \
+		* cos(cub->render->texture_pos - cub->player->angle));
+		if (wall_dist <= 0)
 			wall_dist = HEIGHT;
 		cub->render->draw_start = (HEIGHT / 2) - (int)wall_dist / 2;
 		cub->render->draw_end = (HEIGHT / 2) + (int)wall_dist / 2;
@@ -83,32 +92,3 @@ void	render(t_game *cub)
 		x++;
 	}
 }
-
-/*void	define_draw_points(t_game *cub)
-{
-	double	wall_dist;
-	
-	wall_dist = HEIGHT / (cub->ray->hit_dist * cos(cub->render->texture_pos - cub->player->angle));
-	if(wall_dist <= 0)
-		wall_dist = HEIGHT;
-	cub->render->draw_start = (HEIGHT / 2) - (int)wall_dist / 2;
-	cub->render->draw_end = (HEIGHT / 2) + (int)wall_dist / 2;
-}
-
-
-void	render(t_game *cub)
-{
-	int	x;
-	
-	x = 0;
-	cub->render->text_step = cub->fov / WIDTH;
-	while(x < WIDTH)
-	{
-		cub->render->texture_pos = cub->player->angle - (cub->fov / 2) + (x * cub->render->text_step);
-		ray_info(cub, cub->render->texture_pos);
-		define_draw_points(cub);
-		draw_walls(cub, x, cub->render->draw_start, cub->render->draw_end);
-		x++;
-	}
-}
-*/

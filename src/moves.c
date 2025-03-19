@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:55 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 18:21:11 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:57:47 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 bool	is_colliding(t_game *cub, double x, double y)
 {
-	double margin;
-	
+	double	margin;
+
 	margin = 0.25;
 	if (cub->map[(int)(y + margin)][(int)(x + margin)] == '1' ||
 		cub->map[(int)(y - margin)][(int)(x + margin)] == '1' ||
 		cub->map[(int)(y + margin)][(int)(x - margin)] == '1' ||
 		cub->map[(int)(y - margin)][(int)(x - margin)] == '1')
-		return (true); // Há colisão
-	return (false); // Sem colisão
+		return (true);
+	return (false);
 }
 
 void	move_forward_or_backward(t_game *cub, bool forward)
 {
-	double new_x;
-	double new_y;
+	double	new_x;
+	double	new_y;
 
-	if(forward)
+	if (forward)
 	{
 		new_x = cub->player->pos.x + cub->player->dir.x * MOVE_SPEED;
 		new_y = cub->player->pos.y + cub->player->dir.y * MOVE_SPEED;
@@ -56,10 +56,10 @@ void	move_forward_or_backward(t_game *cub, bool forward)
 
 void	move_left_or_right(t_game *cub, bool left)
 {
-	double new_x;
-	double new_y;
+	double	new_x;
+	double	new_y;
 
-	if(left)
+	if (left)
 	{
 		new_x = cub->player->pos.x + sin(cub->player->angle) * MOVE_SPEED;
 		new_y = cub->player->pos.y - cos(cub->player->angle) * MOVE_SPEED;

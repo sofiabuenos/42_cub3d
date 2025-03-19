@@ -6,25 +6,25 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:16:23 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/17 18:22:19 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:25:08 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_delta_distance_y(t_game *cub, double ray_dir_y) // Passo e direção inicial do raio
+void	get_delta_distance_y(t_game *cub, double ray_dir_y)
 {
 	if (ray_dir_y < 0)
 	{
 		cub->ray->step_y = -1;
 		cub->ray->side.y = cub->ray->delta.y
-		* (cub->player->pos.y - cub->ray->map_y);
+			* (cub->player->pos.y - cub->ray->map_y);
 	}
 	else
 	{
 		cub->ray->step_y = 1;
 		cub->ray->side.y = cub->ray->delta.y
-		* (cub->ray->map_y + 1.0 - cub->player->pos.y);
+			* (cub->ray->map_y + 1.0 - cub->player->pos.y);
 	}
 }
 
@@ -40,7 +40,7 @@ void	get_delta_distance_x(t_game *cub, double ray_dir_x)
 	{
 		cub->ray->step_x = 1;
 		cub->ray->side.x = cub->ray->delta.x
-		* (cub->ray->map_x + 1.0 - cub->player->pos.x);
+			* (cub->ray->map_x + 1.0 - cub->player->pos.x);
 	}
 }
 
@@ -55,34 +55,34 @@ void	dda(t_game *cub)
 		{
 			cub->ray->side.x += cub->ray->delta.x;
 			cub->ray->map_x += cub->ray->step_x;
-			cub->ray->side_axis = 0; // Colisão eixo x (horizontal)
+			cub->ray->side_axis = 0;
 		}
 		else
 		{
 			cub->ray->side.y += cub->ray->delta.y;
 			cub->ray->map_y += cub->ray->step_y;
-			cub->ray->side_axis = 1; // Colisão eixo y (vertical)
+			cub->ray->side_axis = 1;
 		}
-		if(cub->map[cub->ray->map_y][cub->ray->map_x] == '1')
+		if (cub->map[cub->ray->map_y][cub->ray->map_x] == '1')
 			hit = 1;
 	}
 }
 
 void	get_texture_index(t_game *cub)
 {
-	if (cub->ray->side_axis == 0) // Colisão x
+	if (cub->ray->side_axis == 0)
 	{
 		if (cub->ray->step_x > 0)
-			cub->ray->texture = cub->wall[2]; // Parede Leste 
+			cub->ray->texture = cub->wall[2];
 		else
-			cub->ray->texture = cub->wall[3]; // Parede Oeste
+			cub->ray->texture = cub->wall[3];
 	}
-	else // Colisão y
+	else
 	{
 		if (cub->ray->step_y >= 0)
-			cub->ray->texture = cub->wall[1]; // Parede Sul
+			cub->ray->texture = cub->wall[1];
 		else
-			cub->ray->texture = cub->wall[0]; // Parede Norte
+			cub->ray->texture = cub->wall[0];
 	}
 }
 
@@ -92,7 +92,7 @@ void	ray_data(t_game *cub, double ray_angle)
 	cub->ray->dir.y = sin(ray_angle);
 	cub->ray->map_x = (int)cub->player->pos.x;
 	cub->ray->map_y = (int)cub->player->pos.y;
-	cub->ray->delta.x = fabs(1 / cub->ray->dir.x); //Comprimento do raio de uma borda da célula até a próxima - (INICIAL, depois e atualizado)
+	cub->ray->delta.x = fabs(1 / cub->ray->dir.x);
 	cub->ray->delta.y = fabs(1 / cub->ray->dir.y);
 	get_delta_distance_x(cub, cub->ray->dir.x);
 	get_delta_distance_y(cub, cub->ray->dir.y);
@@ -105,5 +105,3 @@ void	ray_data(t_game *cub, double ray_angle)
 	cub->ray->hit.y = cub->player->pos.y + cub->ray->hit_dist * cub->ray->dir.y;
 	get_texture_index(cub);
 }
-
-

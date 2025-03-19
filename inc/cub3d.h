@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/19 10:59:10 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:04:24 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ typedef struct s_player
 typedef struct s_ray
 {
 	t_coord		dir;	// Direção do raio no espaço 2D
-	t_coord		delta;	// Comprimento do raio de uma borda da célula até a próxima
-	t_coord		side;	// Distância inicial do player até a primeira borda do grid
+	t_coord		delta;//Comprimento do raio de uma borda da célula até a próxima
+	t_coord		side; //Distância inicial do player até a primeira borda do grid
 	t_coord		hit;	// Distancia do player da parede nas coordenadas x e y
 	double		hit_dist; //Distancia do player da parede
 	int			map_x;	// Posição do jogador convertida para células do mapa
@@ -114,7 +114,7 @@ typedef struct s_ray
 
 typedef struct s_render
 {
-	double		wall_x; //posiçao exata na textua(wall), onde ocorreu a colisão
+	double		wall_x; //posiçao exata na textura(wall), onde ocorreu a colisão
 	int			wall_height; //coordenada correta na imagem 64x64
 	double		scale; //escala da textura 
 	int			draw_start; //onde começa a textura (wall)
@@ -154,6 +154,7 @@ typedef struct s_game
 /*====== init ======*/
 void			init(t_game *cub);
 void			print_elements(t_game *cub);
+
 /*====== parse ======*/
 void			parse(t_game *cub, int ac, char **av);
 void			check_param(t_game *cub, int ac, char **av);
@@ -162,17 +163,20 @@ void			read_file(t_game *cub, char *file);
 void			check_empty_file(t_game *cub);
 void			parse_file(t_game *cub);
 void			parse_elements(t_game *cub);
+
 /*==== read_utils ====*/
 void			insert_spaces(char *str, char *new_str);
 int				have_tabs(char *str);
 char			*check_tabs(t_game *cub, char *str);
 bool			is_empty_line(char *str);
 void			last_line(t_game *cub, int i, int j);
+
 /*=== parse_elements ===*/
-bool			RGB_ok(char *str);
+bool			rgb_ok(char *str);
 bool			commas_ok(char *str);
 bool			str_is_digit(char *str);
 bool			texture_ok(char *str);
+
 /*=== parse_map ===*/
 void			parse_map(t_game *cub);
 void			get_player_position(t_game *cub, char **map);
@@ -186,6 +190,13 @@ void			check_duplicate(t_game *cub, char *element, char *texture,
 void			assign_texture_or_color(t_game *cub, char *str, char *element);
 char			*get_description(t_game *cub, char *str);
 char			*is_element(char *str);
+
+/*======= parse check =======*/
+void			check_filename(t_game *cub, char **av);
+void			check_empty_file(t_game *cub);
+void			check_param(t_game *cub, int ac, char **av);
+void			check_duplicate(t_game *cub, char *element, char *texture, \
+				char *str);
 
 /*======= Utils =======*/
 unsigned int	index_to_word(char *str, int nb);
@@ -232,8 +243,8 @@ void			render(t_game *cub);
 
 /*======= render_utils =======*/
 int				convert_to_argb(char	*colors, t_game *cub);
-void			my_mlx_pixel_put_color(t_texture *bground, int x, int y,
-					int color);
+void			my_mlx_pixel_put_color(t_texture *bground, int x, int y, \
+				int color);
 unsigned int	my_mlx_pixel_get_color(t_texture *wall, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:54:23 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/18 15:00:30 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:46:06 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_err(char *str)
 {
-	if(*str)
+	if (*str)
 	{
 		ft_putstr_fd("Error\n", 2);
 		ft_printf("%s\n", str);
@@ -23,10 +23,10 @@ void	print_err(char *str)
 
 void	free_array(char **str)
 {
-	int i;
+	int	i;
 
 	if (!str)
-		return;
+		return ;
 	i = 0;
 	while (str[i])
 	{
@@ -62,7 +62,7 @@ void	ft_destroy(t_game *cub)
 		if (cub->wall[i].img)
 			mlx_destroy_image(cub->mlx, cub->wall[i].img);
 	}
-	if(cub->bground->img)
+	if (cub->bground->img)
 		mlx_destroy_image(cub->mlx, cub->bground->img);
 	if (cub->win)
 		mlx_destroy_window(cub->mlx, cub->win);
@@ -73,14 +73,14 @@ void	ft_destroy(t_game *cub)
 void	quit(t_game *cub, char *str)
 {
 	print_err(str);
-	if(cub)
+	if (cub)
 	{
 		if (cub->file_name)
 			free(cub->file_name);
 		if (cub->file)
 			free(cub->file);
 		free_elements(cub);
-		if(cub->map)
+		if (cub->map)
 			free_array(cub->map);
 		ft_destroy(cub);
 		if (cub->player)

@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:34:29 by sbueno-s          #+#    #+#             */
-/*   Updated: 2025/03/18 18:06:25 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:49:14 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,15 @@ void	split_map(t_game *cub, int j)
 	if (followed_line_breaks(cub->file + j))
 		quit(cub, ER_EMPTY_LINE);
 	cub->map = ft_split(cub->file + j, '\n');
-	// if (cub->map)
-	// {
-	// 	int	i = -1;
-	// 	while (cub->map[++i])
-	// 		printf("%s\n", cub->map[i]);
-	// }
 }
 
 void	is_map(t_game *cub, int j)
 {
-	if (!cub->no_texture || !cub->so_texture ||
-		!cub->we_texture || !cub->ea_texture ||
-		!cub->f_color || !cub->c_color)
+	if (!cub->no_texture || !cub->so_texture \
+		|| !cub->we_texture || !cub->ea_texture \
+		|| !cub->f_color || !cub->c_color)
 		quit(cub, ER_INCOMPLETE);
-	split_map(cub, j); 
+	split_map(cub, j);
 }
 
 int	word_count(char *str)
@@ -70,8 +64,8 @@ int	word_count(char *str)
 
 unsigned int	index_to_word(char *str, int nb)
 {
-	int	word;
 	unsigned int	i;
+	int				word;
 
 	word = 0;
 	i = 0;
@@ -81,7 +75,7 @@ unsigned int	index_to_word(char *str, int nb)
 		{
 			word++;
 			if (word == nb)
-				break;
+				break ;
 			while (!ft_isspace(str[i]) && str[i])
 				i++;
 		}
@@ -89,5 +83,3 @@ unsigned int	index_to_word(char *str, int nb)
 	}
 	return (i);
 }
-
-

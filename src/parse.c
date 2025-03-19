@@ -14,17 +14,18 @@
 
 void	parse_elements(t_game *cub)
 {
-	if (RGB_ok(cub->f_color) == false || RGB_ok(cub->c_color) == false)
+	if (rgb_ok(cub->f_color) == false || rgb_ok(cub->c_color) == false)
 		quit(cub, ER_RGB);
-	if (texture_ok(cub->no_texture) == false || texture_ok(cub->so_texture) == false ||
-		texture_ok(cub->we_texture) == false || texture_ok(cub->ea_texture) == false)
+	if (texture_ok(cub->no_texture) == false \
+		|| texture_ok(cub->so_texture) == false \
+		|| texture_ok(cub->we_texture) == false \
+		|| texture_ok(cub->ea_texture) == false)
 		quit(cub, ER_TEXTURE);
 }
 
 void	parse_file(t_game *cub)
 {
 	char	*temp;
-	char	*element;
 	int		j;
 	int		i;
 
@@ -32,35 +33,22 @@ void	parse_file(t_game *cub)
 	i = -1;
 	while (cub->file[++i])
 	{
-		if (cub->file[i] == '\n')
+		if (cub->file[i] != '\n')
+			continue ;
+		temp = ft_substr(cub->file, j, (i - j));
+		if (!temp)
+			quit(cub, "Memory allocation issue - parse_file");
+		if (!is_empty_line(temp) && is_element(temp))
+			get_info(cub, temp, is_element(temp));
+		else if (!is_empty_line(temp))
 		{
-			temp = ft_substr(cub->file, j, (i - j));
-			if (!temp)
-				quit(cub, "Memory allocation issue - parse_file");
-			if (!is_empty_line(temp))
-			{
-				element = is_element(temp);
-				if (element)
-					get_info(cub, temp, element);
-				else 
-				{
-					free(temp);
-					is_map(cub, j);
-					break;
-				}
-			}
 			free(temp);
-			j = i + 1;
+			is_map(cub, j);
+			break ;
 		}
+		free(temp);
+		j = i + 1;
 	}
-	// if (j < i)
-	// 	last_line(cub, i, j);
-}
-
-void	check_empty_file(t_game *cub)
-{
-	if (!cub->file[0])
-		quit(cub, ER_EMPTY);
 }
 
 void	read_file(t_game *cub, char *file_name)
@@ -69,14 +57,15 @@ void	read_file(t_game *cub, char *file_name)
 	char	*file;
 	char	*temp;
 
-	if ((cub->fd = open(file_name, O_RDONLY)) == -1)
+	cub->fd = open(file_name, O_RDONLY);
+	if (cub->fd == -1)
 		quit(cub, ER_OPEN);
 	file = ft_strdup("");
 	while (1)
 	{
 		line = get_next_line(cub->fd);
 		if (!line)
-			break;
+			break ;
 		line = check_tabs(cub, line);
 		temp = file;
 		file = ft_strjoin(temp, line);
@@ -88,26 +77,6 @@ void	read_file(t_game *cub, char *file_name)
 	close(cub->fd);
 }
 
-void	check_filename(t_game *cub, char **av)
-{
-	int		i;
-	if (av[1])
-	{
-		i = ft_strlen(av[1]);
-		if (i - 5 < 0 || av[1][i - 5] == '/' || !(ft_strnstr((av[1] + (i - 4)), ".cub", 4)))
-			quit(cub, ER_FILE);
-	}
-	cub->file_name = ft_strdup(av[1]);
-}
-
-void	check_param(t_game *cub, int ac, char **av)
-{
-	if (ac != 2)
-		quit(cub, ER_PARAM);
-	if (av[1][0] == '\0')
-		quit(cub, ER_FILE);
-}
-
 void	parse(t_game *cub, int ac, char **av)
 {
 	check_param(cub, ac, av);
@@ -117,5 +86,4 @@ void	parse(t_game *cub, int ac, char **av)
 	parse_file(cub);
 	parse_elements(cub);
 	parse_map(cub);
-	//print_elements(cub);
 }
