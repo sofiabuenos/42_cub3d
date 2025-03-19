@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/18 15:11:06 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 10:59:10 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@
 # define C "C "
 
 # define ER_PARAM "Invalid argument. Usage: ./cub3D path_to_file.cub"
-# define ER_FILE "Invalid file. The file must exist and have a .cub extension. Usage: ./cub3D path_to_file.cub"
+# define ER_FILE "Invalid file. The file must exist and have a .cub extension.\
+	Usage: ./cub3D path_to_file.cub"
 # define ER_OPEN "Unable to open file"
 # define ER_EMPTY "Invalid file. The .cub file is empty"
-# define ER_ELMENT "Invalid element format. Usage: ID info. eg: NO path_to_texture.xpm or F 0,255,255"
+# define ER_ELMENT "Invalid element format. Usage: ID info. eg: \
+	NO path_to_texture.xpm or F 0,255,255"
 # define ER_INCOMPLETE "Game setting incomplete or invalid ID"
 # define ER_EMPTY_LINE "Invalid map. The map must not contain empty lines"
 # define ER_MAPGEN "A valid map is required"
-# define ER_RGB "Invalid RGB format. Colors must be three numbers separated by commas, each ranging from 0 to 255. Example: 0,255,255"
-# define ER_TEXTURE "Invalid path. NO, SO, WE, and EA must be followed by a valid .xpm file path."
+# define ER_RGB "Invalid RGB format. Colors must be three numbers separated by commas,\
+	 each ranging from 0 to 255. Example: 0,255,255"
+# define ER_TEXTURE "Invalid path. NO, SO, WE, and EA must be followed by a valid \
+	.xpm file path."
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -66,7 +70,7 @@ typedef struct s_coord
 	double	y;
 }	t_coord;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	void	*img;
 	char	*addr;
@@ -81,7 +85,7 @@ typedef struct s_key
 	int		backward;
 	int		left;
 	int		right;
-	int 	rot_left;
+	int		rot_left;
 	int		rot_right;
 }	t_key;
 
@@ -147,7 +151,6 @@ typedef struct s_game
 	double		fov;
 }			t_game;
 
-
 /*====== init ======*/
 void			init(t_game *cub);
 void			print_elements(t_game *cub);
@@ -172,66 +175,65 @@ bool			str_is_digit(char *str);
 bool			texture_ok(char *str);
 /*=== parse_map ===*/
 void			parse_map(t_game *cub);
-void	get_player_position(t_game *cub, char **map);
-void	check_is_empty(t_game *cub, char *row);
+void			get_player_position(t_game *cub, char **map);
+void			check_is_empty(t_game *cub, char *row);
 
 /*======= parse utils =======*/
 char			*is_element(char *str);
 void			get_info(t_game *cub, char *str, char *element);
-void			check_duplicate(t_game *cub, char *element, char *texture, char *str);
+void			check_duplicate(t_game *cub, char *element, char *texture,
+					char *str);
 void			assign_texture_or_color(t_game *cub, char *str, char *element);
 char			*get_description(t_game *cub, char *str);
 char			*is_element(char *str);
+
 /*======= Utils =======*/
 unsigned int	index_to_word(char *str, int nb);
-int		word_count(char *str);
-void	is_map(t_game *cub, int j);
-void	split_map(t_game *cub, int j);
-bool	followed_line_breaks(char *str);
-
+int				word_count(char *str);
+void			is_map(t_game *cub, int j);
+void			split_map(t_game *cub, int j);
+bool			followed_line_breaks(char *str);
 
 /*======= Error =======*/
-void	quit(t_game *cub, char *str);
-void	ft_destroy(t_game *cub);
-void	free_elements(t_game *cub);
-void	free_array(char **str);
-void	print_err(char *str);
+void			quit(t_game *cub, char *str);
+void			ft_destroy(t_game *cub);
+void			free_elements(t_game *cub);
+void			free_array(char **str);
+void			print_err(char *str);
 
 /*======= init game =======*/
-void	init_game(t_game *cub);
-void	init_background(t_game *cub);
-void	init_textures(t_game *cub);
-void	init_player(t_game	*cub);
+void			init_game(t_game *cub);
+void			init_background(t_game *cub);
+void			init_textures(t_game *cub);
+void			init_player(t_game	*cub);
 
 /*======= keys =======*/
-int		exit_game(t_game *cub);
-int		keypress(int keycode, t_game *cub);
-int		keyrelease(int keycode, t_game *cub);
+int				exit_game(t_game *cub);
+int				keypress(int keycode, t_game *cub);
+int				keyrelease(int keycode, t_game *cub);
 
 /*======= moves =======*/
-bool	is_colliding(t_game *cub, double x, double y);
-void	move_forward_or_backward(t_game *cub, bool forward);
-void	move_left_or_right(t_game *cub, bool left);
-void	handle_move(t_game *cub);
+bool			is_colliding(t_game *cub, double x, double y);
+void			move_forward_or_backward(t_game *cub, bool forward);
+void			move_left_or_right(t_game *cub, bool left);
+void			handle_move(t_game *cub);
 
 /*======= raycast =======*/
-void	get_delta_distance_y(t_game *cub, double ray_dir_y);
-void	get_delta_distance_x(t_game *cub, double ray_dir_x);
-void	dda(t_game *cub);
-void	get_texture_index(t_game *cub);
-void	ray_data(t_game *cub, double ray_angle);
+void			get_delta_distance_y(t_game *cub, double ray_dir_y);
+void			get_delta_distance_x(t_game *cub, double ray_dir_x);
+void			dda(t_game *cub);
+void			get_texture_index(t_game *cub);
+void			ray_data(t_game *cub, double ray_angle);
 
 /*======= render =======*/
-void	draw_background(t_game *cub);
-void	draw_walls(t_game *cub, int x, int begin, int end);
-void	render(t_game *cub);
+void			draw_background(t_game *cub);
+void			draw_walls(t_game *cub, int x, int begin, int end);
+void			render(t_game *cub);
 
 /*======= render_utils =======*/
 int				convert_to_argb(char	*colors, t_game *cub);
-void			my_mlx_pixel_put_color(t_texture *bground, int x, int y, int color);
+void			my_mlx_pixel_put_color(t_texture *bground, int x, int y,
+					int color);
 unsigned int	my_mlx_pixel_get_color(t_texture *wall, int x, int y);
-
-
-
 
 #endif

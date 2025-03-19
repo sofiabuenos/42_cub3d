@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:31:10 by sbueno-s          #+#    #+#             */
-/*   Updated: 2023/11/02 13:12:24 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:05:05 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_strlen(const char *s)
 
 void	ft_putstr(const char *s, int *count)
 {
-	int	len; 
+	int	len;
 
 	if (!s)
 	{

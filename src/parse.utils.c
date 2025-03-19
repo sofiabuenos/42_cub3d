@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:44:49 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/18 18:58:59 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:30:49 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,36 @@ char	*is_element(char *str)
 	return (info);
 }*/
 
+char	*get_color_description(t_game *cub, char *str)
+{
+	char	**temp;
+	int		i;
+	int		j;
+	char	*info;
+	
+	temp = ft_split(str, ',');
+	if((!temp || !temp[0] || !temp[1] || !temp[2] || temp[3] != NULL))
+	{
+		free(str);
+		free_array(temp);
+		quit(cub, ER_ELMENT);
+	}
+	info = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!info)
+		quit(cub, "Memory allocation failure - get_description");
+	j = 0;
+	i = 0;
+	while (str[++i])
+	{
+		if(!ft_isspace(str[i]))
+			info[j++] = str[i];
+	}
+	info[j] = '\0';
+	printf("STRING(info):%s\n", info);
+	free_array(temp);
+	return (info);
+}
+
 char	*get_description(t_game *cub, char *str)
 {
 	int		i;
@@ -102,9 +132,9 @@ void	assign_texture_or_color(t_game *cub, char *str, char *element)
 	else if (!ft_strncmp(element, EA, 3))
 		cub->ea_texture = get_description(cub, str);
 	else if (!ft_strncmp(element, F, 2))
-		cub->f_color = get_description(cub, str);
+		cub->f_color = get_color_description(cub, str);
 	else if (!ft_strncmp(element, C, 2))
-		cub->c_color = get_description(cub, str);
+		cub->c_color = get_color_description(cub, str);
 }
 
 void	check_duplicate(t_game *cub, char *element, char *texture, char *str)
