@@ -1,10 +1,10 @@
-F 76,76,76
-C 99,99,99
+F 75,81,69
+C 118,119,111
 
-NO maps/textures/no_texture.xpm
-SO maps/textures/so_texture.xpm
-EA maps/textures/ea_texture.xpm
-WE maps/textures/we_texture.xpm
+NO maps/textures/no_wall.xpm
+SO maps/textures/so_wall.xpm
+EA maps/textures/ea_wall.xpm
+WE maps/textures/we_wall.xpm
 
 
 

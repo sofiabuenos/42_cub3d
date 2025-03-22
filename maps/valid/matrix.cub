@@ -1,10 +1,10 @@
-NO maps/textures/no_texture.xpm
-SO maps/textures/so_texture.xpm
-EA maps/textures/ea_texture.xpm
-WE maps/textures/we_texture.xpm
+NO maps/textures/no_wall.xpm
+SO maps/textures/so_wall.xpm
+EA maps/textures/ea_wall.xpm
+WE maps/textures/we_wall.xpm
 
-F 0,0,0
-C 0,0,0
+F 118,119,111
+C 69,74,66
 
 111111111111111111111
 101000001000000000001

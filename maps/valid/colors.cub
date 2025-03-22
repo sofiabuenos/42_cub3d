@@ -1,10 +1,11 @@
-NO maps/textures/no_texture.xpm
-SO maps/textures/so_texture.xpm
-EA maps/textures/ea_texture.xpm
-WE maps/textures/we_texture.xpm
+NO maps/textures/no_game.xpm
+SO maps/textures/so_game.xpm
+EA maps/textures/ea_game.xpm
+WE maps/textures/we_game.xpm
 
-F 101,183,65
-C 123,211,234
+C 140,200,250
+
+F 150,240,110
 
 1111111111111111111111111111111111111111
 1000000000000000000000000000000000000001

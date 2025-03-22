@@ -1,10 +1,10 @@
-F 76,76,76
-C 99,99,99
+C 93,158,251
+F 255,255,255
 
-NO maps/textures/no_texture.xpm
-SO maps/textures/so_texture.xpm
-EA maps/textures/ea_texture.xpm
-WE maps/textures/we_texture.xpm
+NO maps/textures/no_game.xpm
+SO maps/textures/so_game.xpm
+EA maps/textures/ea_game.xpm
+WE maps/textures/we_game.xpm
 
    1
   101

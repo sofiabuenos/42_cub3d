@@ -1,16 +1,15 @@
-NO    maps/textures/no_game.xpm
+
+
+    NO    maps/textures/no_game.xpm
 SO   maps/textures/so_game.xpm
-WE maps/textures/we_game.xpm
+  WE maps/textures/we_game.xpm
 EA maps/textures/ea_game.xpm
 
-F 128,208,15
+F 128, 208,   15   
 
-C 93,148,251
+C 93,148,251  
 
-	      111    1111
-	      111    1111
-	      101    1101
-         1111111111111111111111111
+          11111111111111111111111
          10000000000000000000000011111
 11111111110000000000000000000000000N01
 10000000000000000000000000001111111111

@@ -1,10 +1,10 @@
-NO maps/textures/no_texture.xpm
-SO maps/textures/so_texture.xpm
-EA maps/textures/ea_texture.xpm
-WE maps/textures/we_texture.xpm
+NO maps/textures/no_planet.xpm
+SO maps/textures/so_planet.xpm
+EA maps/textures/ea_planet.xpm
+WE maps/textures/we_planet.xpm
 
-F 101,183,65
-C 123,211,234
+C 0,23,45
+F 0,23,55
 
 
         1

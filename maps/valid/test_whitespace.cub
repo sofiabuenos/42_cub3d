@@ -19,8 +19,8 @@ SO maps/textures/so_texture.xpm
                         WE maps/textures/we_texture.xpm
         EA maps/textures/ea_texture.xpm            
 
-        F 20,           20,             20
-C 200,          200,200
+        C 20,           20,             20
+F 200,          200,200
 
 11111
 10001

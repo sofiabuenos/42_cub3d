@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:15:26 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/19 16:07:37 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/22 14:56:54 by sheila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,13 @@ void	get_wall_collision(t_game *cub)
 			cub->render->wall_x = cub->ray->hit.x - floor(cub->ray->hit.x);
 	}
 	else
-		cub->render->wall_x = (cub->ray->hit.y) - floor(cub->ray->hit.y);
+	{
+		if (cub->ray->step_x < 0)
+			cub->render->wall_x = 1.0 - (cub->ray->hit.y - \
+			floor(cub->ray->hit.y));
+		else
+			cub->render->wall_x = (cub->ray->hit.y) - floor(cub->ray->hit.y);
+	}
 }
 
 void	draw_walls(t_game *cub, int x, int begin, int end)
