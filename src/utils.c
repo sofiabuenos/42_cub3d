@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:34:29 by sbueno-s          #+#    #+#             */
-/*   Updated: 2025/03/19 15:49:14 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:55:14 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,21 @@
 bool	followed_line_breaks(char *str)
 {
 	int	i;
+	int	count;
 
 	i = -1;
 	while (str[++i])
 	{
 		if (str[i] == '\n' && str[i + 1] && str[i + 1] == '\n')
-			return (true);
+		{
+			count = i;
+			while (str[count] == '\n')
+				count++;
+			if (str[count] == '\0')
+				return (false);
+			else
+				return (true);
+		}
 	}
 	return (false);
 }
@@ -34,6 +43,10 @@ void	split_map(t_game *cub, int j)
 
 void	is_map(t_game *cub, int j)
 {
+	if (!cub->no_texture && !cub->so_texture \
+		&& !cub->we_texture && !cub->ea_texture \
+		&& !cub->f_color && !cub->c_color)
+		quit(cub, ER_MAPTOP);
 	if (!cub->no_texture || !cub->so_texture \
 		|| !cub->we_texture || !cub->ea_texture \
 		|| !cub->f_color || !cub->c_color)

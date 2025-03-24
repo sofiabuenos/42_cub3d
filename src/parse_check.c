@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:34:34 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/19 14:37:45 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:38:56 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_filename(t_game *cub, char **av)
 
 void	check_empty_file(t_game *cub)
 {
-	if (!cub->file[0])
+	if (!cub->file[0] || check_is_empty(cub->file))
 		quit(cub, ER_EMPTY);
 }
 

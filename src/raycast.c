@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sheila <sheila@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 17:16:23 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/21 23:08:37 by sheila           ###   ########.fr       */
+/*   Updated: 2025/03/24 18:32:32 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_delta_distance_y(t_game *cub, double ray_dir_y)
+void	get_side_distance_y(t_game *cub, double ray_dir_y)
 {
 	if (ray_dir_y < 0)
 	{
@@ -28,7 +28,7 @@ void	get_delta_distance_y(t_game *cub, double ray_dir_y)
 	}
 }
 
-void	get_delta_distance_x(t_game *cub, double ray_dir_x)
+void	get_side_distance_x(t_game *cub, double ray_dir_x)
 {
 	if (ray_dir_x < 0)
 	{
@@ -94,8 +94,8 @@ void	ray_data(t_game *cub, double ray_angle)
 	cub->ray->map_y = (int)cub->player->pos.y;
 	cub->ray->delta.x = fabs(1 / cub->ray->dir.x);
 	cub->ray->delta.y = fabs(1 / cub->ray->dir.y);
-	get_delta_distance_x(cub, cub->ray->dir.x);
-	get_delta_distance_y(cub, cub->ray->dir.y);
+	get_side_distance_x(cub, cub->ray->dir.x);
+	get_side_distance_y(cub, cub->ray->dir.y);
 	dda(cub);
 	if (cub->ray->side_axis == 0)
 		cub->ray->hit_dist = cub->ray->side.x - cub->ray->delta.x;

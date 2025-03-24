@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:42:40 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/19 16:04:24 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:32:48 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,28 @@
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-mac/mlx.h"
 
-# define NO "NO " //0
-# define SO "SO " //1
-# define EA "EA " //2
-# define WE "WE " //3
+# define NO "NO "
+# define SO "SO "
+# define EA "EA "
+# define WE "WE "
 # define F "F "
 # define C "C "
 
 # define ER_PARAM "Invalid argument. Usage: ./cub3D path_to_file.cub"
 # define ER_FILE "Invalid file. The file must exist and have a .cub extension.\
-	Usage: ./cub3D path_to_file.cub"
+Usage: ./cub3D path_to_file.cub"
 # define ER_OPEN "Unable to open file"
 # define ER_EMPTY "Invalid file. The .cub file is empty"
 # define ER_ELMENT "Invalid element format. Usage: ID info. eg: \
-	NO path_to_texture.xpm or F 0,255,255"
+NO path_to_texture.xpm or F 0,255,255"
 # define ER_INCOMPLETE "Game setting incomplete or invalid ID"
 # define ER_EMPTY_LINE "Invalid map. The map must not contain empty lines"
 # define ER_MAPGEN "A valid map is required"
 # define ER_RGB "Invalid RGB format. Colors must be three numbers separated by commas,\
-	 each ranging from 0 to 255. Example: 0,255,255"
+ each ranging from 0 to 255. Example: 0,255,255"
 # define ER_TEXTURE "Invalid path. NO, SO, WE, and EA must be followed by a valid \
-	.xpm file path."
+.xpm file path."
+# define ER_MAPTOP "The map content must be the last"
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -180,7 +181,7 @@ bool			texture_ok(char *str);
 /*=== parse_map ===*/
 void			parse_map(t_game *cub);
 void			get_player_position(t_game *cub, char **map);
-void			check_is_empty(t_game *cub, char *row);
+bool			check_is_empty(char *row);
 
 /*======= parse utils =======*/
 char			*is_element(char *str);
@@ -230,8 +231,8 @@ void			move_left_or_right(t_game *cub, bool left);
 void			handle_move(t_game *cub);
 
 /*======= raycast =======*/
-void			get_delta_distance_y(t_game *cub, double ray_dir_y);
-void			get_delta_distance_x(t_game *cub, double ray_dir_x);
+void			get_side_distance_y(t_game *cub, double ray_dir_y);
+void			get_side_distance_x(t_game *cub, double ray_dir_x);
 void			dda(t_game *cub);
 void			get_texture_index(t_game *cub);
 void			ray_data(t_game *cub, double ray_angle);

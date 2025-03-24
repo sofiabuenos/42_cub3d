@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:40:27 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/19 15:25:24 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:54:27 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,18 @@ bool	is_empty_line(char *str)
 		return (false);
 }
 
-void	last_line(t_game *cub, int i, int j)
+void	print_elements(t_game *cub)
 {
-	char	*temp;
-
-	temp = ft_substr(cub->file, j, (i - j));
-	if (!temp)
-		quit(cub, "Memory allocation issue - parse_file");
-	if (!is_empty_line(temp))
-	{
-		printf("\n\n%s\n", temp);
-	}
-	free(temp);
+	if (cub->no_texture)
+		printf("NO texture: %s\n", cub->no_texture);
+	if (cub->so_texture)
+		printf("SO texture: %s\n", cub->so_texture);
+	if (cub->we_texture)
+		printf("WE texture: %s\n", cub->we_texture);
+	if (cub->ea_texture)
+		printf("EA texture: %s\n", cub->ea_texture);
+	if (cub->f_color)
+		printf("F color: %s\n", cub->f_color);
+	if (cub->c_color)
+		printf("C color: %s\n", cub->c_color);
 }

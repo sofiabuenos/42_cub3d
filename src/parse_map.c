@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 17:55:37 by sofiabueno        #+#    #+#             */
-/*   Updated: 2025/03/19 14:04:45 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:00:56 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ void	get_player_position(t_game *cub, char **map)
 		quit(cub, "Invalid map. Player is not set");
 }
 
-void	check_is_empty(t_game *cub, char *row)
+bool	check_is_empty(char *row)
 {
 	while (*row == ' ' || *row == '\n')
 		row++;
 	if (*row == '\0')
-		quit(cub, "Map is not valid: There is a empty line");
+		return (true);
+	return (false);
 }
 
 void	check_map(t_game *cub, int y)
@@ -81,7 +82,8 @@ void	parse_map(t_game *cub)
 	y = -1;
 	while (cub->map[++y])
 	{
-		check_is_empty(cub, cub->map[y]);
+		if (check_is_empty(cub->map[y]))
+			quit(cub, "Invalid Map: There is an empty line");
 		check_map(cub, y);
 	}
 	get_player_position(cub, cub->map);
