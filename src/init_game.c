@@ -6,7 +6,7 @@
 /*   By: shrodrig <shrodrig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 16:19:36 by shrodrig          #+#    #+#             */
-/*   Updated: 2025/03/19 15:51:05 by shrodrig         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:08:16 by shrodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,29 @@ void	init_background(t_game *cub)
 
 void	init_textures(t_game *cub)
 {
-	int		i;
-	int		t_size;
-	char	**texture_path;
+	int	i;
+	int	t_size;
 
 	i = -1;
 	t_size = (int)SIZE;
-	texture_path = (char **)malloc(sizeof(char *) * 4);
-	if (!texture_path)
-		quit(cub, "Memory allocation fail - texture_path");
-	texture_path[0] = cub->no_texture;
-	texture_path[1] = cub->so_texture;
-	texture_path[2] = cub->ea_texture;
-	texture_path[3] = cub->we_texture;
+	cub->wall[0].img = mlx_xpm_file_to_image(cub->mlx, cub->no_texture, \
+	&t_size, &t_size);
+	cub->wall[1].img = mlx_xpm_file_to_image(cub->mlx, cub->so_texture, \
+	&t_size, &t_size);
+	cub->wall[2].img = mlx_xpm_file_to_image(cub->mlx, cub->ea_texture, \
+	&t_size, &t_size);
+	cub->wall[3].img = mlx_xpm_file_to_image(cub->mlx, cub->we_texture, \
+	&t_size, &t_size);
+	if (!cub->wall[0].img || !cub->wall[1].img || !cub->wall[2].img || \
+	!cub->wall[3].img)
+		quit(cub, "Fail to load texture");
 	while (++i < 4)
 	{
-		cub->wall[i].img = mlx_xpm_file_to_image(cub->mlx, texture_path[i], \
-			&t_size, &t_size);
-		if (!cub->wall[i].img)
-			quit(cub, "Fail to load texture");
 		cub->wall[i].addr = mlx_get_data_addr(cub->wall[i].img, \
 			&cub->wall[i].bpp, &cub->wall[i].size_line, &cub->wall[i].endian);
 		if (!cub->wall[i].addr)
 			quit(cub, "Fail to get texture data adress");
 	}
-	free(texture_path);
 }
 
 void	init_player(t_game	*cub)
